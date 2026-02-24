@@ -508,6 +508,20 @@ body {
   min-width: 0;
 }
 
+.fixed-consult-bar.is-split .privacy-detail-btn {
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: inherit;
+  line-height: inherit;
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+}
+
 
 .fixed-consult-bar.is-split .consult-privacy-check {
   flex-shrink: 0;
@@ -544,6 +558,13 @@ body {
 .fixed-consult-bar.is-split .consult-submit::after {
   content: none;
   display: none;
+}
+
+.properties-N3 .footer-privacy-policy {
+  max-height: none;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  white-space: normal;
 }
 
 

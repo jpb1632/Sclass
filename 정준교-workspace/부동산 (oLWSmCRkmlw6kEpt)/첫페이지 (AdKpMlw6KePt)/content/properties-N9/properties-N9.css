@@ -163,6 +163,13 @@
   padding-left: 1.2rem;
 }
 
+.properties-N9 .privacy-policy-content {
+  max-height: none;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  white-space: normal;
+}
+
 .properties-N9 .modal-confirm .modal-area {
   position: relative;
   padding: 3.2rem;

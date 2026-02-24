@@ -1604,6 +1604,12 @@ html, body { margin: 0 !important; padding: 0 !important
 .properties-N9 .info-list p {
   padding-left: 1.2rem
 }
+.properties-N9 .privacy-policy-content {
+  max-height: none;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  white-space: normal
+}
 .properties-N9 .modal-confirm .modal-area {
   position: relative;
   padding: 3.2rem;
@@ -2120,6 +2126,19 @@ body {
   white-space: nowrap;
   min-width: 0
 }
+.fixed-consult-bar.is-split .privacy-detail-btn {
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: inherit;
+  line-height: inherit;
+  text-decoration: underline;
+  text-underline-offset: 1px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap
+}
 .fixed-consult-bar.is-split .consult-privacy-check {
   flex-shrink: 0;
   width: calc(9px * var(--consult-scale));
@@ -2153,6 +2172,12 @@ body {
 .fixed-consult-bar.is-split .consult-submit::after {
   content: none;
   display: none
+}
+.properties-N3 .footer-privacy-policy {
+  max-height: none;
+  font-size: 1.5rem;
+  line-height: 1.7;
+  white-space: normal
 }
 @media (max-width: 992px) {
 .properties-N3 {
