@@ -52,9 +52,12 @@
       purpose_required: "목적은 최소 하나 이상 선택해 주세요.",
       spam_blocked: "비정상 요청으로 차단되었습니다.",
       rate_limited: "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
-      duplicate_request: "동일한 요청이 이미 접수되었습니다. 잠시 후 다시 시도해 주세요."
+      duplicate_request: "동일한 요청이 이미 접수되었습니다. 잠시 후 다시 시도해 주세요.",
+      mail_quota_exceeded: "메일 발송 한도를 초과했습니다. 잠시 후 다시 시도해 주세요."
     };
-    return map[code] || FAILURE_MESSAGE;
+    if (map[code]) return map[code];
+    if (code && typeof code === "string") return "서버 응답: " + code;
+    return FAILURE_MESSAGE;
   }
 
   function validateCommon(payload) {
