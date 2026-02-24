@@ -505,6 +505,7 @@
       </div>
       <div class="form-group">
         <form target="_self" action="javascript:void(0);" method="POST" novalidate>
+          <input type="text" id="consult-honeypot" name="consult-honeypot" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
           <div class="form-box">
             <div class="inputset">
               <label for="properties-N9-inputset-a-1" class="form-tit">성함 <span>*</span>
@@ -556,6 +557,10 @@
                 <label for="checkset-properties-N9-b-1" class="checkset-label">개인정보 수집동의</label>
               </div>
               <a href="javascript:void(0);" class="btnset btnset-link modalset-open-btn modal-privacy-btn" data-modal-target="modalset-agree">자세히보기</a>
+            </div>
+            <div class="turnstile-wrap" style="margin:8px 0 10px;">
+              <div id="ts-consult"></div>
+              <input type="hidden" id="consult_ts_token" value="">
             </div>
             <div class="form-btn">
               <button class="btnset btnset-primary" type="submit">문의하기</button>
@@ -632,6 +637,11 @@
             <span>개인정보 수집/이용동의</span>
             <button type="button" class="privacy-detail-btn modalset-open-btn" data-modal-target="footer-privacy-modal">[자세히보기]</button>
           </label>
+          <input type="text" id="quick-honeypot" name="quick-honeypot" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;" aria-hidden="true">
+          <div class="turnstile-wrap" style="margin-top:6px;">
+            <div id="ts-quick"></div>
+            <input type="hidden" id="quick_ts_token" value="">
+          </div>
         </div>
         <button type="button" class="consult-submit">신청<br>하기</button>
       </div>
@@ -681,6 +691,7 @@
   <script src="../resources/js/setting.js"></script>
   <script src="../resources/js/templatehouse.js"></script>
   <script src="./style.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   <script src="./lead-submit.js"></script>
 </body>
 </html>

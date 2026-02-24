@@ -3,24 +3,19 @@
 
   var GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyzdbUTkYplaed2_GYYbaGb1-B71hufZxYhvXLNEkuwl24AAjXpILKynVjtLYIxSjUXfA/exec";
 
+  // Turnstile Site Key를 여기에 넣으세요.
+  var TURNSTILE_SITE_KEY = "REPLACE_WITH_TURNSTILE_SITE_KEY";
+
   var SUCCESS_MESSAGE = "상담신청이 접수되었습니다. 곧 연락드리겠습니다.";
   var FAILURE_MESSAGE = "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
   var URL_REQUIRED_MESSAGE = "Google Apps Script URL이 설정되지 않았습니다.";
+  var CAPTCHA_REQUIRED_MESSAGE = "보안 확인을 완료해 주세요.";
 
   var NAME_PATTERN = /^[A-Za-z\uAC00-\uD7A3]+$/;
   var PHONE_PATTERN = /^010\d{8}$/;
 
-  function mapServerMessage(code) {
-    var map = {
-      source_required: "유입폼 정보가 없습니다.",
-      name_required: "이름을 입력해 주세요.",
-      name_invalid: "이름은 한글 또는 영문만 입력해 주세요.",
-      phone_invalid: "휴대폰 번호는 010으로 시작하는 11자리 숫자만 입력해 주세요.",
-      agree_required: "개인정보 수집/이용동의에 체크해 주세요.",
-      purpose_required: "목적은 최소 하나 이상 선택해 주세요."
-    };
-    return map[code] || FAILURE_MESSAGE;
-  }
+  var quickWidgetId = null;
+  var consultWidgetId = null;
 
   function qs(selector, root) {
     return (root || document).querySelector(selector);
@@ -54,6 +49,22 @@
     if (field && typeof field.focus === "function") field.focus();
   }
 
+  function mapServerMessage(code) {
+    var map = {
+      source_required: "유입폼 정보가 없습니다.",
+      name_required: "이름을 입력해 주세요.",
+      name_invalid: "이름은 한글 또는 영문만 입력해 주세요.",
+      phone_invalid: "휴대폰 번호는 010으로 시작하는 11자리 숫자만 입력해 주세요.",
+      agree_required: "개인정보 수집/이용동의에 체크해 주세요.",
+      purpose_required: "목적은 최소 하나 이상 선택해 주세요.",
+      spam_blocked: "비정상 요청으로 차단되었습니다.",
+      captcha_failed: "보안 확인에 실패했습니다. 다시 시도해 주세요.",
+      rate_limited: "요청이 너무 많습니다. 잠시 후 다시 시도해 주세요.",
+      duplicate_request: "동일한 요청이 이미 접수되었습니다. 잠시 후 다시 시도해 주세요."
+    };
+    return map[code] || FAILURE_MESSAGE;
+  }
+
   function validateCommon(payload) {
     if (!payload.name) return { ok: false, message: "이름을 입력해 주세요.", key: "name" };
     if (!NAME_PATTERN.test(payload.name)) return { ok: false, message: "이름은 한글 또는 영문만 입력해 주세요.", key: "name" };
@@ -69,6 +80,69 @@
       return { ok: false, message: "목적은 최소 하나 이상 선택해 주세요.", key: "purpose" };
     }
     return { ok: true };
+  }
+
+  function hasValidSiteKey() {
+    return TURNSTILE_SITE_KEY && TURNSTILE_SITE_KEY.indexOf("REPLACE_WITH_") !== 0;
+  }
+
+  function initTurnstileWidgets() {
+    if (!hasValidSiteKey()) return;
+
+    var retries = 0;
+    var timer = setInterval(function () {
+      if (!window.turnstile || typeof window.turnstile.render !== "function") {
+        retries += 1;
+        if (retries > 120) clearInterval(timer);
+        return;
+      }
+
+      clearInterval(timer);
+
+      var quickContainer = qs("#ts-quick");
+      var consultContainer = qs("#ts-consult");
+      var quickTokenInput = qs("#quick_ts_token");
+      var consultTokenInput = qs("#consult_ts_token");
+
+      if (quickContainer) {
+        quickWidgetId = window.turnstile.render(quickContainer, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: function (token) {
+            if (quickTokenInput) quickTokenInput.value = token || "";
+          },
+          "expired-callback": function () {
+            if (quickTokenInput) quickTokenInput.value = "";
+          },
+          "error-callback": function () {
+            if (quickTokenInput) quickTokenInput.value = "";
+          }
+        });
+      }
+
+      if (consultContainer) {
+        consultWidgetId = window.turnstile.render(consultContainer, {
+          sitekey: TURNSTILE_SITE_KEY,
+          callback: function (token) {
+            if (consultTokenInput) consultTokenInput.value = token || "";
+          },
+          "expired-callback": function () {
+            if (consultTokenInput) consultTokenInput.value = "";
+          },
+          "error-callback": function () {
+            if (consultTokenInput) consultTokenInput.value = "";
+          }
+        });
+      }
+    }, 100);
+  }
+
+  function resetTurnstile(widgetId, tokenInput) {
+    if (tokenInput) tokenInput.value = "";
+    if (window.turnstile && widgetId !== null && widgetId !== undefined) {
+      try {
+        window.turnstile.reset(widgetId);
+      } catch (_) {}
+    }
   }
 
   async function sendToGAS(payload) {
@@ -92,7 +166,7 @@
     var data;
     try {
       data = await response.json();
-    } catch (e) {
+    } catch (_) {
       throw new Error(FAILURE_MESSAGE);
     }
 
@@ -110,7 +184,6 @@
     var form = qs(".form-group form", section);
     if (!form) return;
 
-    // 기존 외부 submit fallback으로 405가 뜨는 것을 막기 위해 JS 전송 전용으로 강제.
     form.setAttribute("action", "javascript:void(0);");
     form.setAttribute("target", "_self");
     form.setAttribute("novalidate", "novalidate");
@@ -122,6 +195,8 @@
     var agreeInput = qs("#checkset-properties-N9-b-1", form);
     var submitBtn = qs("button[type='submit']", form);
     var purposeInputs = qsa(".checkset-wrap .checkset-input", form);
+    var tokenInput = qs("#consult_ts_token");
+    var honeypotInput = qs("#consult-honeypot");
 
     if (nameInput) {
       var composing = false;
@@ -153,6 +228,12 @@
         event.preventDefault();
         event.stopPropagation();
 
+        var tsToken = tokenInput ? String(tokenInput.value || "").trim() : "";
+        if (hasValidSiteKey() && !tsToken) {
+          alert(CAPTCHA_REQUIRED_MESSAGE);
+          return;
+        }
+
         var payload = {
           source: "consultation",
           name: sanitizeName(nameInput ? nameInput.value : ""),
@@ -167,7 +248,9 @@
             .filter(Boolean),
           region: String(regionInput && regionInput.value ? regionInput.value : "").trim(),
           message: String(messageInput && messageInput.value ? messageInput.value : "").trim(),
-          agree: !!(agreeInput && agreeInput.checked)
+          agree: !!(agreeInput && agreeInput.checked),
+          turnstileToken: tsToken,
+          honeypot: honeypotInput ? String(honeypotInput.value || "").trim() : ""
         };
 
         if (nameInput) nameInput.value = payload.name;
@@ -187,8 +270,10 @@
           await sendToGAS(payload);
           alert(SUCCESS_MESSAGE);
           form.reset();
+          resetTurnstile(consultWidgetId, tokenInput);
         } catch (error) {
           alert(error && error.message ? error.message : FAILURE_MESSAGE);
+          resetTurnstile(consultWidgetId, tokenInput);
         } finally {
           setLoading(submitBtn, false);
         }
@@ -205,6 +290,9 @@
     var phoneInput = qs(".consult-form input[type='tel']", bar);
     var agreeInput = qs(".consult-privacy-check", bar);
     var submitBtn = qs(".consult-submit", bar);
+    var tokenInput = qs("#quick_ts_token", bar);
+    var honeypotInput = qs("#quick-honeypot", bar);
+
     if (!submitBtn) return;
 
     if (nameInput) {
@@ -239,11 +327,19 @@
         event.preventDefault();
         event.stopPropagation();
 
+        var tsToken = tokenInput ? String(tokenInput.value || "").trim() : "";
+        if (hasValidSiteKey() && !tsToken) {
+          alert(CAPTCHA_REQUIRED_MESSAGE);
+          return;
+        }
+
         var payload = {
           source: "quick_bar",
           name: sanitizeName(nameInput ? nameInput.value : ""),
           phone: sanitizePhone(phoneInput ? phoneInput.value : ""),
-          agree: !!(agreeInput && agreeInput.checked)
+          agree: !!(agreeInput && agreeInput.checked),
+          turnstileToken: tsToken,
+          honeypot: honeypotInput ? String(honeypotInput.value || "").trim() : ""
         };
 
         if (nameInput) nameInput.value = payload.name;
@@ -265,8 +361,11 @@
           if (nameInput) nameInput.value = "";
           if (phoneInput) phoneInput.value = "";
           if (agreeInput) agreeInput.checked = false;
+          if (honeypotInput) honeypotInput.value = "";
+          resetTurnstile(quickWidgetId, tokenInput);
         } catch (error) {
           alert(error && error.message ? error.message : FAILURE_MESSAGE);
+          resetTurnstile(quickWidgetId, tokenInput);
         } finally {
           setLoading(submitBtn, false);
         }
@@ -277,10 +376,12 @@
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function () {
+      initTurnstileWidgets();
       wireConsultationForm();
       wireQuickBarForm();
     });
   } else {
+    initTurnstileWidgets();
     wireConsultationForm();
     wireQuickBarForm();
   }
