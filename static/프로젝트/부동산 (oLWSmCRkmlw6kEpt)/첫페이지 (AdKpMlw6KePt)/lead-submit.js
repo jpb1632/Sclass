@@ -1,16 +1,22 @@
-﻿(function() {
+(function () {
   "use strict";
 
-  // TODO: 諛고룷??Google Apps Script Web App URL濡?援먯껜?섏꽭??
-  // ?? https://script.google.com/macros/s/AKfycb.../exec
   var GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyJZ8DGxmMrI1ynZsbYQbaqM7qGp4De5-fpaO6UU7dj4n8_ONkoo8J-4dKTM7VIrw4NnA/exec";
 
-  var SUCCESS_MESSAGE = "?곷떞?좎껌???묒닔?섏뿀?듬땲?? 怨??곕씫?쒕━寃좎뒿?덈떎.";
-  var FAILURE_MESSAGE = "?꾩넚 以??ㅻ쪟媛 諛쒖깮?덉뒿?덈떎. ?좎떆 ???ㅼ떆 ?쒕룄??二쇱꽭??";
-  var URL_REQUIRED_MESSAGE = "Google Apps Script URL??癒쇱? ?ㅼ젙??二쇱꽭??";
+  var SUCCESS_MESSAGE = "상담신청이 접수되었습니다. 곧 연락드리겠습니다.";
+  var FAILURE_MESSAGE = "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
+  var URL_REQUIRED_MESSAGE = "Google Apps Script URL이 설정되지 않았습니다.";
 
   var NAME_PATTERN = /^[A-Za-z\uAC00-\uD7A3]+$/;
   var PHONE_PATTERN = /^010\d{8}$/;
+
+  function qs(selector, root) {
+    return (root || document).querySelector(selector);
+  }
+
+  function qsa(selector, root) {
+    return Array.prototype.slice.call((root || document).querySelectorAll(selector));
+  }
 
   function sanitizeName(value) {
     return String(value || "").replace(/[^A-Za-z\uAC00-\uD7A3]/g, "").trim();
@@ -20,30 +26,35 @@
     return String(value || "").replace(/\D/g, "").slice(0, 11);
   }
 
-  function setButtonLoading($button, loading, defaultHtml) {
-    if (!$button || !$button.length) return;
-    $button.prop("disabled", loading);
+  function setLoading(button, loading) {
+    if (!button) return;
     if (loading) {
-      $button.data("default-html", defaultHtml || $button.html());
-      $button.html("?꾩넚以?..");
+      if (!button.dataset.defaultText) button.dataset.defaultText = button.innerHTML;
+      button.disabled = true;
+      button.innerHTML = "전송중...";
     } else {
-      $button.html(defaultHtml || $button.data("default-html") || $button.html());
+      button.disabled = false;
+      if (button.dataset.defaultText) button.innerHTML = button.dataset.defaultText;
     }
   }
 
+  function focusField(field) {
+    if (field && typeof field.focus === "function") field.focus();
+  }
+
   function validateCommon(payload) {
-    if (!payload.name) return { ok: false, message: "?대쫫???낅젰??二쇱꽭??", field: "name" };
-    if (!NAME_PATTERN.test(payload.name)) return { ok: false, message: "?대쫫? ?쒓? ?먮뒗 ?곸뼱留??낅젰??二쇱꽭??", field: "name" };
-    if (!PHONE_PATTERN.test(payload.phone)) return { ok: false, message: "?대???踰덊샇??010?쇰줈 ?쒖옉?섎뒗 11?먮━ ?レ옄留??낅젰??二쇱꽭??", field: "phone" };
-    if (!payload.agree) return { ok: false, message: "媛쒖씤?뺣낫 ?섏쭛/?댁슜?숈쓽??泥댄겕??二쇱꽭??", field: "agree" };
+    if (!payload.name) return { ok: false, message: "이름을 입력해 주세요.", key: "name" };
+    if (!NAME_PATTERN.test(payload.name)) return { ok: false, message: "이름은 한글 또는 영문만 입력해 주세요.", key: "name" };
+    if (!PHONE_PATTERN.test(payload.phone)) return { ok: false, message: "휴대폰 번호는 010으로 시작하는 11자리 숫자만 입력해 주세요.", key: "phone" };
+    if (!payload.agree) return { ok: false, message: "개인정보 수집/이용동의에 체크해 주세요.", key: "agree" };
     return { ok: true };
   }
 
   function validateConsultation(payload) {
-    var base = validateCommon(payload);
-    if (!base.ok) return base;
+    var common = validateCommon(payload);
+    if (!common.ok) return common;
     if (!payload.purpose || !payload.purpose.length) {
-      return { ok: false, message: "紐⑹쟻? 理쒖냼 ?섎굹 ?댁긽 ?좏깮??二쇱꽭??", field: "purpose" };
+      return { ok: false, message: "목적은 최소 하나 이상 선택해 주세요.", key: "purpose" };
     }
     return { ok: true };
   }
@@ -56,7 +67,6 @@
     var params = new URLSearchParams();
     params.set("payload", JSON.stringify(payload));
 
-    // Apps Script CORS ?쒖빟 ?뚰뵾瑜??꾪빐 no-cors ?ъ슜.
     await fetch(GAS_WEBHOOK_URL, {
       method: "POST",
       mode: "no-cors",
@@ -64,137 +74,185 @@
     });
   }
 
-  function focusByField(ctx, field) {
-    if (!ctx) return;
-    if (field === "name" && ctx.$name && ctx.$name.length) ctx.$name.trigger("focus");
-    if (field === "phone" && ctx.$phone && ctx.$phone.length) ctx.$phone.trigger("focus");
-    if (field === "agree" && ctx.$agree && ctx.$agree.length) ctx.$agree.trigger("focus");
-  }
+  function wireConsultationForm() {
+    var section = qs(".properties-N9[id='vzMlw6KehW']");
+    if (!section) return;
 
-  $(function() {
-    var $consultSection = $(".properties-N9[id='vzMlw6KehW']").first();
-    var $consultForm = $consultSection.find(".form-group form").first();
+    var form = qs(".form-group form", section);
+    if (!form) return;
 
-    if ($consultForm.length) {
-      var $name = $consultForm.find("#properties-N9-inputset-a-1").first();
-      var $phone = $consultForm.find("#properties-N9-inputset-a-2").first();
-      var $purposeChecks = $consultForm.find(".checkset-wrap .checkset-input");
-      var $region = $consultForm.find("#properties-N9-inputset-a-3").first();
-      var $message = $consultForm.find("#properties-N9-textarea-a-1").first();
-      var $agree = $consultForm.find("#checkset-properties-N9-b-1").first();
-      var $submit = $consultForm.find("button[type='submit']").first();
+    // 기존 외부 submit fallback으로 405가 뜨는 것을 막기 위해 JS 전송 전용으로 강제.
+    form.setAttribute("action", "javascript:void(0);");
+    form.setAttribute("target", "_self");
+    form.setAttribute("novalidate", "novalidate");
 
-      // 湲곗〈 ?몃뱾???쒓굅 ???꾩옱 濡쒖쭅?쇰줈 ?듭씪
-      $consultForm.off("submit.privacyConsentGuard");
-      $consultForm.off("submit.gasLead");
+    var nameInput = qs("#properties-N9-inputset-a-1", form);
+    var phoneInput = qs("#properties-N9-inputset-a-2", form);
+    var regionInput = qs("#properties-N9-inputset-a-3", form);
+    var messageInput = qs("#properties-N9-textarea-a-1", form);
+    var agreeInput = qs("#checkset-properties-N9-b-1", form);
+    var submitBtn = qs("button[type='submit']", form);
+    var purposeInputs = qsa(".checkset-wrap .checkset-input", form);
 
-      $name.off("input.nameFilter").on("input.nameFilter", function(event) {
-        if (event.originalEvent && event.originalEvent.isComposing) return;
-        var normalized = sanitizeName($(this).val());
-        if ($(this).val() !== normalized) $(this).val(normalized);
+    if (nameInput) {
+      var composing = false;
+      nameInput.addEventListener("compositionstart", function () {
+        composing = true;
       });
-
-      $phone.off("input.phoneFilter").on("input.phoneFilter", function() {
-        var normalized = sanitizePhone($(this).val());
-        if ($(this).val() !== normalized) $(this).val(normalized);
+      nameInput.addEventListener("compositionend", function () {
+        composing = false;
+        nameInput.value = sanitizeName(nameInput.value);
       });
+      nameInput.addEventListener("input", function (event) {
+        if (composing || (event && event.isComposing)) return;
+        nameInput.value = sanitizeName(nameInput.value);
+      });
+    }
 
-      $consultForm.on("submit.gasLead", async function(event) {
+    if (phoneInput) {
+      phoneInput.setAttribute("inputmode", "numeric");
+      phoneInput.setAttribute("maxlength", "11");
+      phoneInput.addEventListener("input", function () {
+        phoneInput.value = sanitizePhone(phoneInput.value);
+      });
+    }
+
+    document.addEventListener(
+      "submit",
+      async function (event) {
+        if (!event.target || event.target !== form) return;
         event.preventDefault();
+        event.stopPropagation();
 
         var payload = {
           source: "consultation",
-          name: sanitizeName($name.val()),
-          phone: sanitizePhone($phone.val()),
-          purpose: $purposeChecks.filter(":checked").map(function() {
-            return $(this).val();
-          }).get(),
-          region: String($region.val() || "").trim(),
-          message: String($message.val() || "").trim(),
-          agree: !!$agree.prop("checked")
+          name: sanitizeName(nameInput ? nameInput.value : ""),
+          phone: sanitizePhone(phoneInput ? phoneInput.value : ""),
+          purpose: purposeInputs
+            .filter(function (el) {
+              return el.checked;
+            })
+            .map(function (el) {
+              return String(el.value || "").trim();
+            })
+            .filter(Boolean),
+          region: String(regionInput && regionInput.value ? regionInput.value : "").trim(),
+          message: String(messageInput && messageInput.value ? messageInput.value : "").trim(),
+          agree: !!(agreeInput && agreeInput.checked)
         };
 
-        $name.val(payload.name);
-        $phone.val(payload.phone);
+        if (nameInput) nameInput.value = payload.name;
+        if (phoneInput) phoneInput.value = payload.phone;
 
         var check = validateConsultation(payload);
         if (!check.ok) {
           alert(check.message);
-          focusByField({ $name: $name, $phone: $phone, $agree: $agree }, check.field);
+          if (check.key === "name") focusField(nameInput);
+          if (check.key === "phone") focusField(phoneInput);
+          if (check.key === "agree") focusField(agreeInput);
           return;
         }
 
-        var defaultHtml = $submit.html();
-        setButtonLoading($submit, true, defaultHtml);
+        setLoading(submitBtn, true);
         try {
           await sendToGAS(payload);
           alert(SUCCESS_MESSAGE);
-          $consultForm[0].reset();
+          form.reset();
         } catch (error) {
           alert(error && error.message ? error.message : FAILURE_MESSAGE);
         } finally {
-          setButtonLoading($submit, false, defaultHtml);
+          setLoading(submitBtn, false);
         }
+      },
+      true
+    );
+  }
+
+  function wireQuickBarForm() {
+    var bar = qs(".fixed-consult-bar.is-split");
+    if (!bar) return;
+
+    var nameInput = qs(".consult-form input[type='text']", bar);
+    var phoneInput = qs(".consult-form input[type='tel']", bar);
+    var agreeInput = qs(".consult-privacy-check", bar);
+    var submitBtn = qs(".consult-submit", bar);
+    if (!submitBtn) return;
+
+    if (nameInput) {
+      var composing = false;
+      nameInput.addEventListener("compositionstart", function () {
+        composing = true;
+      });
+      nameInput.addEventListener("compositionend", function () {
+        composing = false;
+        nameInput.value = sanitizeName(nameInput.value);
+      });
+      nameInput.addEventListener("input", function (event) {
+        if (composing || (event && event.isComposing)) return;
+        nameInput.value = sanitizeName(nameInput.value);
       });
     }
 
-    var $quickBar = $(".fixed-consult-bar.is-split").first();
-    if ($quickBar.length) {
-      var $qName = $quickBar.find(".consult-form input[type='text']").first();
-      var $qPhone = $quickBar.find(".consult-form input[type='tel']").first();
-      var $qAgree = $quickBar.find(".consult-privacy-check").first();
-      var $qSubmit = $quickBar.find(".consult-submit").first();
-
-      // 湲곗〈 ?몃뱾???쒓굅 ???꾩옱 濡쒖쭅?쇰줈 ?듭씪
-      $qSubmit.off("click.privacyConsentGuard");
-      $qSubmit.off("click.gasLead");
-
-      $qName.off("input.nameFilter").on("input.nameFilter", function(event) {
-        if (event.originalEvent && event.originalEvent.isComposing) return;
-        var normalized = sanitizeName($(this).val());
-        if ($(this).val() !== normalized) $(this).val(normalized);
+    if (phoneInput) {
+      phoneInput.setAttribute("inputmode", "numeric");
+      phoneInput.setAttribute("maxlength", "11");
+      phoneInput.addEventListener("input", function () {
+        phoneInput.value = sanitizePhone(phoneInput.value);
       });
+    }
 
-      $qPhone.off("input.phoneFilter").on("input.phoneFilter", function() {
-        var normalized = sanitizePhone($(this).val());
-        if ($(this).val() !== normalized) $(this).val(normalized);
-      });
+    document.addEventListener(
+      "click",
+      async function (event) {
+        var button = event.target && event.target.closest ? event.target.closest(".consult-submit") : null;
+        if (!button || button !== submitBtn) return;
 
-      $qSubmit.on("click.gasLead", async function(event) {
         event.preventDefault();
+        event.stopPropagation();
 
         var payload = {
           source: "quick_bar",
-          name: sanitizeName($qName.val()),
-          phone: sanitizePhone($qPhone.val()),
-          agree: !!$qAgree.prop("checked")
+          name: sanitizeName(nameInput ? nameInput.value : ""),
+          phone: sanitizePhone(phoneInput ? phoneInput.value : ""),
+          agree: !!(agreeInput && agreeInput.checked)
         };
 
-        $qName.val(payload.name);
-        $qPhone.val(payload.phone);
+        if (nameInput) nameInput.value = payload.name;
+        if (phoneInput) phoneInput.value = payload.phone;
 
         var check = validateCommon(payload);
         if (!check.ok) {
           alert(check.message);
-          focusByField({ $name: $qName, $phone: $qPhone, $agree: $qAgree }, check.field);
+          if (check.key === "name") focusField(nameInput);
+          if (check.key === "phone") focusField(phoneInput);
+          if (check.key === "agree") focusField(agreeInput);
           return;
         }
 
-        var defaultHtml = $qSubmit.html();
-        setButtonLoading($qSubmit, true, defaultHtml);
+        setLoading(submitBtn, true);
         try {
           await sendToGAS(payload);
           alert(SUCCESS_MESSAGE);
-          $qName.val("");
-          $qPhone.val("");
-          $qAgree.prop("checked", false);
+          if (nameInput) nameInput.value = "";
+          if (phoneInput) phoneInput.value = "";
+          if (agreeInput) agreeInput.checked = false;
         } catch (error) {
           alert(error && error.message ? error.message : FAILURE_MESSAGE);
         } finally {
-          setButtonLoading($qSubmit, false, defaultHtml);
+          setLoading(submitBtn, false);
         }
-      });
-    }
-  });
-})();
+      },
+      true
+    );
+  }
 
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
+      wireConsultationForm();
+      wireQuickBarForm();
+    });
+  } else {
+    wireConsultationForm();
+    wireQuickBarForm();
+  }
+})();
