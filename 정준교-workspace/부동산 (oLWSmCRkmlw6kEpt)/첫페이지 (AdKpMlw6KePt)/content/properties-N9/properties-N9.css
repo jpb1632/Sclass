@@ -1,8 +1,8 @@
-.properties-N9 {
+﻿.properties-N9 {
   overflow: hidden;
   position: relative;
-  padding-top: 14rem;
-  padding-bottom: 14rem;
+  padding-top: 3rem;
+  padding-bottom: 8rem;
 }
 
 .properties-N9 .contents-inner {
@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
-  margin-bottom: 6rem;
+  margin-bottom: 3.2rem;
   text-align: center;
 }
 
@@ -25,6 +25,12 @@
 }
 
 .properties-N9 .form-group {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.properties-N9 .form-group form {
   width: 100%;
 }
 
@@ -45,7 +51,7 @@
 }
 
 .properties-N9 .form-box+.form-box {
-  margin-top: 1.6rem;
+  margin-top: 1rem;
 }
 
 .properties-N9 .inputset+.inputset {
@@ -61,7 +67,7 @@
 }
 
 .properties-N9 .inputset .inputset-textarea {
-  height: 14rem;
+  height: 9rem;
   resize: none;
 }
 
@@ -69,7 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2.4rem;
+  margin-top: 1.6rem;
 }
 
 .properties-N9 .contents-agree {
@@ -237,8 +243,8 @@
 
 @media (max-width: 992px) {
   .properties-N9 {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: 2.4rem;
+    padding-bottom: 4rem;
   }
 
   .properties-N9 .title-area {
@@ -277,5 +283,8 @@
 
   .properties-N9 .modal-confirm .modal-textarea {
     margin: 0.8rem 0;
+  }
+  .properties-N9 .form-group {
+    max-width: 100%;
   }
 }

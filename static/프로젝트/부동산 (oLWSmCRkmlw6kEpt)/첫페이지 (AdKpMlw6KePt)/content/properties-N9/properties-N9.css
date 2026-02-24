@@ -1,7 +1,7 @@
-.properties-N9 {
+﻿.properties-N9 {
   overflow: hidden;
   position: relative;
-  padding-top: 14rem;
+  padding-top: 3rem;
   padding-bottom: 14rem;
 }
 
@@ -26,6 +26,8 @@
 
 .properties-N9 .form-group {
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .properties-N9 .form-group .form-tit {
@@ -237,7 +239,7 @@
 
 @media (max-width: 992px) {
   .properties-N9 {
-    padding-top: 5rem;
+    padding-top: 3rem;
     padding-bottom: 5rem;
   }
 
@@ -277,5 +279,9 @@
 
   .properties-N9 .modal-confirm .modal-textarea {
     margin: 0.8rem 0;
+  }
+
+  .properties-N9 .form-group {
+    max-width: 100%;
   }
 }

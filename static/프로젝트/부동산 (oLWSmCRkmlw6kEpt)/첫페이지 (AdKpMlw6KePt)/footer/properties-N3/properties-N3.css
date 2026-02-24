@@ -314,6 +314,61 @@
     margin-top: calc(1px * var(--consult-scale));
   }
 
+  .fixed-consult-bar.is-split .consult-privacy {
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    gap: calc(1px * var(--consult-scale));
+    justify-self: start;
+    margin-top: calc(-3px * var(--consult-scale));
+  }
+
+  .fixed-consult-bar.is-split .consult-privacy > span {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  .fixed-consult-bar.is-split .privacy-detail-btn {
+    flex-shrink: 0;
+    margin-left: calc(2px * var(--consult-scale));
+  }
+
+  /* Use empty area under submit button */
+  .fixed-consult-bar.is-split .consult-form-wrap {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: start;
+    column-gap: calc(5px * var(--consult-scale));
+  }
+
+  .fixed-consult-bar.is-split .consult-form-title {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .fixed-consult-bar.is-split .consult-form-group {
+    display: contents;
+  }
+
+  .fixed-consult-bar.is-split .consult-form {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .fixed-consult-bar.is-split .consult-privacy {
+    grid-column: 2 / 4;
+    grid-row: 2;
+  }
+
+  .fixed-consult-bar.is-split .consult-submit {
+    grid-column: 3;
+    grid-row: 1;
+    margin-top: 0;
+  }
+
   body {
     padding-bottom: calc((var(--consult-base-height) + 20) * 1px * var(--consult-scale));
   }
@@ -502,10 +557,10 @@ body {
 }
 
 .fixed-consult-bar.is-split .consult-privacy > span {
-  overflow: visible;
-  text-overflow: clip;
-  white-space: nowrap;
   min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .fixed-consult-bar.is-split .privacy-detail-btn {

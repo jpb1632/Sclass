@@ -6,7 +6,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
   overflow: hidden;
   margin-top: -2px;
   position: relative;
-  background: #78b7e4 url("../../resources/images/%EC%B5%9C%EC%A2%85_%EB%A9%94%EC%9D%B8%EC%82%AC%EC%A7%84.png") no-repeat center/cover;
+  background: #78b7e4 url("../../resources/images/main2.png") no-repeat center/cover;
   --icon-fs-mlw6lqc7: 1.6rem;
   --icon-fs-mlw8xjhm: 1.6rem;
   --width-mlw95uhc: 380px;
@@ -181,7 +181,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
   .properties-N4 {
     padding-top: 8.8rem;
     padding-bottom: 2.8rem;
-    background: #78b7e4 url("../../resources/images/%EC%B5%9C%EC%A2%85_%EB%A9%94%EC%9D%B8%EC%82%AC%EC%A7%84.png") no-repeat center top/cover !important;
+    background: #78b7e4 url("../../resources/images/main2.png") no-repeat center top/cover !important;
     --icon-fs-mlw6lqc7: 1.4rem;
     --icon-fs-mlw8xjhm: 1.4rem;
   }

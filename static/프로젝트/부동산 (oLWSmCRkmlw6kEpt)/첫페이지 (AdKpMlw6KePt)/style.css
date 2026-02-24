@@ -735,7 +735,7 @@ html, body { margin: 0 !important; padding: 0 !important
   overflow: hidden;
   margin-top: -2px;
   position: relative;
-  background: #78b7e4 url("../resources/images/%EC%B5%9C%EC%A2%85_%EB%A9%94%EC%9D%B8%EC%82%AC%EC%A7%84.png") no-repeat center/cover;
+  background: #78b7e4 url("../resources/images/main2.png") no-repeat center/cover;
   --icon-fs-mlw6lqc7: 1.6rem;
   --icon-fs-mlw8xjhm: 1.6rem;
   --width-mlw95uhc: 380px;
@@ -888,7 +888,7 @@ html, body { margin: 0 !important; padding: 0 !important
  .properties-N4 {
     padding-top: 8.8rem;
     padding-bottom: 2.8rem;
-    background: #78b7e4 url("../resources/images/%EC%B5%9C%EC%A2%85_%EB%A9%94%EC%9D%B8%EC%82%AC%EC%A7%84.png") no-repeat center top/cover !important;
+    background: #78b7e4 url("../resources/images/main2.png") no-repeat center top/cover !important;
     --icon-fs-mlw6lqc7: 1.4rem;
     --icon-fs-mlw8xjhm: 1.4rem
  }
@@ -1125,6 +1125,16 @@ html, body { margin: 0 !important; padding: 0 !important
   width: 100%;
   height: auto
 }
+.properties-N6.reveal-ready .n6-image-item {
+  opacity: 0;
+  transform: translateY(72px);
+  transition: opacity 1.05s ease, transform 1.05s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform
+}
+.properties-N6.reveal-ready .n6-image-item.in-view {
+  opacity: 1;
+  transform: translateY(0)
+}
 @media (max-width: 992px) {
   .properties-N6 {
     padding-top: 4rem;
@@ -1137,12 +1147,19 @@ html, body { margin: 0 !important; padding: 0 !important
     margin-top: 2rem
   }
 }
+@media (prefers-reduced-motion: reduce) {
+  .properties-N6.reveal-ready .n6-image-item {
+    opacity: 1;
+    transform: none;
+    transition: none
+  }
+}
 /* properties-N7 */
 .properties-N7 {
   overflow: hidden;
   position: relative;
   padding-top: 14rem;
-  padding-bottom: 14rem
+  padding-bottom: 4rem
 }
 .properties-N7 .contents-inner {
   width: 100%
@@ -1273,7 +1290,7 @@ html, body { margin: 0 !important; padding: 0 !important
 @media (max-width: 992px) {
   .properties-N7 {
     padding-top: 7rem;
-    padding-bottom: 7rem
+    padding-bottom: 4rem
   }
   .properties-N7 .fullscreen {
     height: auto
@@ -1346,12 +1363,13 @@ html, body { margin: 0 !important; padding: 0 !important
   }
 }
 /* properties-N8 */
+/* Scroll reveal for N8 image stack */
 .properties-N8 {
   overflow: hidden;
   position: relative;
-  padding-top: 10rem;
-  padding-bottom: 10rem;
-  background: #f8f8f8
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  background: #fff
 }
 .properties-N8 .contents-inner {
   width: 100%
@@ -1371,22 +1389,31 @@ html, body { margin: 0 !important; padding: 0 !important
 }
 .properties-N8 .map-area {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-items: center;
-  justify-content: center;
-  gap: 4rem
+  grid-template-columns: 1fr;
+  gap: 2.4rem
 }
 .properties-N8 .addr {
   align-self: stretch
 }
 .properties-N8 .thumb {
   width: 100%;
-  aspect-ratio: 31 / 20
+  aspect-ratio: auto
 }
 .properties-N8 .thumb img {
   width: 100%;
-  height: 100%;
-  object-fit: cover
+  height: auto;
+  object-fit: contain;
+  display: block
+}
+.properties-N8.reveal-ready .addr {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
+  will-change: opacity, transform
+}
+.properties-N8.reveal-ready .addr.in-view {
+  opacity: 1;
+  transform: translateY(0)
 }
 .properties-N8 dl {
   display: flex;
@@ -1430,8 +1457,8 @@ html, body { margin: 0 !important; padding: 0 !important
 }
 @media (max-width: 992px) {
   .properties-N8 {
-    padding-top: 5rem;
-    padding-bottom: 5rem
+    padding-top: 2rem;
+    padding-bottom: 2rem
   }
   .properties-N8 .title-area {
     flex-direction: column;
@@ -1444,11 +1471,11 @@ html, body { margin: 0 !important; padding: 0 !important
   }
   .properties-N8 .map-area {
     grid-template-columns: 1fr;
-    gap: 4rem
+    gap: 1.6rem
   }
   .properties-N8 .thumb {
-    max-height: 45rem;
-    aspect-ratio: 82 / 53
+    max-height: none;
+    aspect-ratio: auto
   }
   .properties-N8 dl {
     display: flex;
@@ -1469,12 +1496,19 @@ html, body { margin: 0 !important; padding: 0 !important
     font-size: 2rem
   }
 }
+@media (prefers-reduced-motion: reduce) {
+  .properties-N8.reveal-ready .addr {
+    opacity: 1;
+    transform: none;
+    transition: none
+  }
+}
 /* properties-N9 */
 .properties-N9 {
   overflow: hidden;
   position: relative;
-  padding-top: 14rem;
-  padding-bottom: 14rem
+  padding-top: 3rem;
+  padding-bottom: 8rem
 }
 .properties-N9 .contents-inner {
   width: 100%
@@ -1484,7 +1518,7 @@ html, body { margin: 0 !important; padding: 0 !important
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
-  margin-bottom: 6rem;
+  margin-bottom: 3.2rem;
   text-align: center
 }
 .properties-N9 .ico-dot {
@@ -1493,6 +1527,11 @@ html, body { margin: 0 !important; padding: 0 !important
   background: url("../resources/icons/ico_diamond.svg") no-repeat center/contain
 }
 .properties-N9 .form-group {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto
+}
+.properties-N9 .form-group form {
   width: 100%
 }
 .properties-N9 .form-group .form-tit {
@@ -1509,7 +1548,7 @@ html, body { margin: 0 !important; padding: 0 !important
   color: #c90000
 }
 .properties-N9 .form-box+.form-box {
-  margin-top: 1.6rem
+  margin-top: 1rem
 }
 .properties-N9 .inputset+.inputset {
   margin-top: 4rem
@@ -1521,14 +1560,14 @@ html, body { margin: 0 !important; padding: 0 !important
   width: 100%
 }
 .properties-N9 .inputset .inputset-textarea {
-  height: 14rem;
+  height: 9rem;
   resize: none
 }
 .properties-N9 .form-wrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 2.4rem
+  margin-top: 1.6rem
 }
 .properties-N9 .contents-agree {
   display: flex;
@@ -1666,8 +1705,8 @@ html, body { margin: 0 !important; padding: 0 !important
 }
 @media (max-width: 992px) {
   .properties-N9 {
-    padding-top: 5rem;
-    padding-bottom: 5rem
+    padding-top: 2.4rem;
+    padding-bottom: 4rem
   }
   .properties-N9 .title-area {
     flex-direction: column;
@@ -1699,69 +1738,8 @@ html, body { margin: 0 !important; padding: 0 !important
   .properties-N9 .modal-confirm .modal-textarea {
     margin: 0.8rem 0
   }
-}
-/* properties-N10 */
-.properties-N10 {
-  overflow: hidden;
-  position: relative;
-  padding-top: 10rem;
-  padding-bottom: 10rem;
-  background: url("../resources/images/properties_N10_01.png") no-repeat center/cover
-}
-.properties-N10 .contents-inner {
-  width: 100%
-}
-.properties-N10 .title-area {
-  margin-bottom: 6rem
-}
-.properties-N10 .title-area h2 {
-  color: var(--white);
-  text-align: center
-}
-.properties-N10 .link-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem
-}
-.properties-N10 .link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-  min-width: 37rem;
-  height: 8.8rem;
-  border-radius: 0.6rem;
-  border: 2px solid var(--white);
-  color: var(--white)
-}
-.properties-N10 .link i {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem
-}
-@media (max-width: 992px) {
-  .properties-N10 {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-    background: url("../resources/images/properties_N10_02.png") no-repeat center/cover
-  }
-  .properties-N10 .title-area {
-    margin-bottom: 3rem
-  }
-  .properties-N10 .link-wrap {
-    flex-direction: column;
-    gap: 1.6rem
-  }
-  .properties-N10 .link {
-    min-width: 21.1rem;
-    height: 6.2rem
-  }
-  .properties-N10 .link i {
-    width: 2rem;
-    height: 2rem
+  .properties-N9 .form-group {
+    max-width: 100%
   }
 }
 /* properties-N3 */
@@ -2121,10 +2099,10 @@ body {
   white-space: nowrap
 }
 .fixed-consult-bar.is-split .consult-privacy > span {
-  overflow: visible;
-  text-overflow: clip;
-  white-space: nowrap;
-  min-width: 0
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
 }
 .fixed-consult-bar.is-split .privacy-detail-btn {
   border: 0;
@@ -2232,16 +2210,52 @@ body {
     padding: 0 calc(8px * var(--consult-scale)) 0 calc(14px * var(--consult-scale))
   }
 .fixed-consult-bar.is-split .consult-form-wrap {
-    padding: calc(12px * var(--consult-scale)) calc(8px * var(--consult-scale)) 0 calc(28px * var(--consult-scale))
+    padding: calc(12px * var(--consult-scale)) calc(8px * var(--consult-scale)) 0 calc(28px * var(--consult-scale));
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: start;
+    column-gap: calc(5px * var(--consult-scale))
   }
 .fixed-consult-bar.is-split .consult-form-title {
     font-size: calc(15px * var(--consult-scale));
     margin-top: calc(6px * var(--consult-scale));
-    transform: translateX(calc(-5px * var(--consult-scale)))
+    transform: translateX(calc(-5px * var(--consult-scale)));
+    grid-column: 1;
+    grid-row: 1 / span 2
   }
 .fixed-consult-bar.is-split .consult-submit {
     align-self: flex-start;
-    margin-top: calc(1px * var(--consult-scale))
+    margin-top: 0;
+    grid-column: 3;
+    grid-row: 1
+  }
+.fixed-consult-bar.is-split .consult-privacy {
+    width: auto;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    gap: calc(1px * var(--consult-scale));
+    justify-self: start;
+    margin-top: calc(-3px * var(--consult-scale));
+    grid-column: 2 / 4;
+    grid-row: 2
+  }
+.fixed-consult-bar.is-split .consult-privacy > span {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip
+  }
+.fixed-consult-bar.is-split .privacy-detail-btn {
+    flex-shrink: 0;
+    margin-left: calc(2px * var(--consult-scale))
+  }
+.fixed-consult-bar.is-split .consult-form-group {
+    display: contents
+  }
+.fixed-consult-bar.is-split .consult-form {
+    grid-column: 2;
+    grid-row: 1
   }
 body {
     padding-bottom: calc((var(--consult-base-height) + 20) * 1px * var(--consult-scale))
