@@ -10,6 +10,18 @@
   var NAME_PATTERN = /^[A-Za-z\uAC00-\uD7A3]+$/;
   var PHONE_PATTERN = /^010\d{8}$/;
 
+  function mapServerMessage(code) {
+    var map = {
+      source_required: "유입폼 정보가 없습니다.",
+      name_required: "이름을 입력해 주세요.",
+      name_invalid: "이름은 한글 또는 영문만 입력해 주세요.",
+      phone_invalid: "휴대폰 번호는 010으로 시작하는 11자리 숫자만 입력해 주세요.",
+      agree_required: "개인정보 수집/이용동의에 체크해 주세요.",
+      purpose_required: "목적은 최소 하나 이상 선택해 주세요."
+    };
+    return map[code] || FAILURE_MESSAGE;
+  }
+
   function qs(selector, root) {
     return (root || document).querySelector(selector);
   }
@@ -67,11 +79,28 @@
     var params = new URLSearchParams();
     params.set("payload", JSON.stringify(payload));
 
-    await fetch(GAS_WEBHOOK_URL, {
+    var response = await fetch(GAS_WEBHOOK_URL, {
       method: "POST",
-      mode: "no-cors",
+      mode: "cors",
       body: params
     });
+
+    if (!response.ok) {
+      throw new Error(FAILURE_MESSAGE);
+    }
+
+    var data;
+    try {
+      data = await response.json();
+    } catch (e) {
+      throw new Error(FAILURE_MESSAGE);
+    }
+
+    if (!data || data.result !== "success") {
+      throw new Error(mapServerMessage(data && data.message));
+    }
+
+    return data;
   }
 
   function wireConsultationForm() {
