@@ -198,8 +198,6 @@
           source: "consultation",
           name: sanitizeName(nameInput ? nameInput.value : ""),
           phone: sanitizePhone(phoneInput ? phoneInput.value : ""),
-          origin: window.location.origin,
-          page: window.location.pathname,
           purpose: purposeInputs
             .filter(function (el) {
               return el.checked;
@@ -289,8 +287,6 @@
           source: "quick_bar",
           name: sanitizeName(nameInput ? nameInput.value : ""),
           phone: sanitizePhone(phoneInput ? phoneInput.value : ""),
-          origin: window.location.origin,
-          page: window.location.pathname,
           agree: !!(agreeInput && agreeInput.checked),
           honeypot: honeypotInput ? String(honeypotInput.value || "").trim() : ""
         };
