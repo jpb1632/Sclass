@@ -548,6 +548,92 @@
 }
 
 @media (max-width: 992px) {
+  body.menu-page-view {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden !important;
+  }
+
+  body.menu-page-view .menupage-main,
+  body.menu-page-view .properties-N3 {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .menu-page-view .properties-N1 {
+    z-index: 9998;
+  }
+
+  .menu-page-view .properties-N1 .header-container {
+    overflow: visible;
+    padding-right: 0.4rem;
+  }
+
+  .menu-page-view .properties-N1 .header-left {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .menu-page-view .properties-N1 .header-title {
+    min-width: 0;
+  }
+
+  .menu-page-view .properties-N1 .header-right {
+    position: relative;
+    z-index: 120;
+    overflow: visible;
+    margin-left: auto !important;
+    flex: 0 0 auto;
+    min-width: 3.2rem;
+  }
+
+  .menu-page-view .properties-N1 .header-utils,
+  .menu-page-view .properties-N1 .header-utils > ul {
+    position: relative;
+    z-index: 120;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-page-view .properties-N1 .header-utils > ul > li.button {
+    flex-shrink: 0;
+  }
+
+  .menu-page-view .properties-N1 .header-utils .call-inline {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 120;
+    margin-right: 4.2rem;
+  }
+
+  .menu-page-view .properties-N1 .btn-momenu {
+    display: flex !important;
+    position: absolute;
+    right: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 121;
+    margin-left: 0;
+  }
+
+  .menu-page-view .fixed-consult-bar.is-split {
+    position: fixed !important;
+    left: 0 !important;
+    right: auto !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    z-index: 9999 !important;
+    transform: none !important;
+    -webkit-transform: none !important;
+  }
+
+  .menu-page-view .fixed-consult-bar.is-split .fixed-consult-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   .menupage-main {
     padding-top: 6.2rem;
     padding-bottom: 2.4rem;

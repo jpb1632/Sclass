@@ -361,18 +361,50 @@ html, body { margin: 0 !important; padding: 0 !important
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10rem
+  margin-bottom: 10rem;
+  padding-left: 6.8rem
 }
 .properties-N1 .fullmenu-title {
   margin-bottom: 0
 }
 .properties-N1 .fullmenu-title a {
-  height: 4.3rem
+  display: inline-flex;
+  align-items: center;
+  min-height: 4.3rem;
+  height: auto
 }
-.properties-N1 .fullmenu-title img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover
+.properties-N1 .fullmenu-title .brand-mark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #fff;
+  font-family: "Pretendard", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1
+}
+.properties-N1 .fullmenu-title .brand-prefix {
+  margin-right: 0.1rem;
+  font-size: 0.9em;
+  font-weight: 600;
+  opacity: 0.82
+}
+.properties-N1 .fullmenu-title .brand-text {
+  white-space: nowrap
+}
+.properties-N1 .fullmenu-title .brand-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.35rem;
+  padding: 0.14em 0.42em 0.16em;
+  border-radius: 0.3em;
+  background: #fff;
+  color: #163a67;
+  font-size: 0.64em;
+  font-weight: 700;
+  line-height: 1
 }
 .properties-N1 .fullmenu-member {
   display: flex;
@@ -485,6 +517,11 @@ html, body { margin: 0 !important; padding: 0 !important
  }
 .properties-N1 .header-gnblink {
     padding: 2.8rem 2.4rem
+ }
+}
+@media (max-width: 1279px) {
+.properties-N1 .fullmenu-head {
+    padding-left: 4rem
  }
 }
 @media (max-width: 992px) {
@@ -2424,11 +2461,32 @@ body {
     font-size: 10px
   }
 .fixed-consult-bar.is-split .consult-submit {
-    width: 72px;
-    height: 76px;
-    border-radius: 10px;
-    font-size: 24px
+  width: 72px;
+  height: 76px;
+  border-radius: 10px;
+  font-size: 24px
   }
+
+.fixed-consult-bar.is-split .consult-submit.is-loading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixed-consult-bar.is-split .consult-submit .consult-submit-spinner {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 0.24rem solid rgba(16, 47, 91, 0.22);
+  border-top-color: #102f5b;
+  animation: consultSubmitSpin 0.75s linear infinite;
+}
+
+@keyframes consultSubmitSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 }
 @media (min-width: 901px) and (max-width: 1180px) {
 .fixed-consult-bar.is-split .fixed-consult-inner {

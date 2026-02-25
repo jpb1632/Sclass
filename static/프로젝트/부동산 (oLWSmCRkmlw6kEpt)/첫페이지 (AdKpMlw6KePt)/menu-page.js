@@ -60,6 +60,7 @@
   };
 
   let roughmapLoaderPromise = null;
+  let mobileLayoutGuardBound = false;
 
   const CONTENT_CONFIG = {
     business: {
@@ -97,8 +98,8 @@
       },
       brand: {
         title: "양주 백석 모아엘가 그랑데 브랜드소개",
-        subtitle: "'사는 이의 자부심과 품격이 남다른",
-        copy: "명품 라이프 브랜드'",
+        subtitle: "'사는 이의 자부심과 품격이 남다른'",
+        copy: "명품 라이프 브랜드",
         copySub: "",
         image: "../resources/images/Business guide3.jpg",
         specs: [],
@@ -699,6 +700,72 @@
     fallbackTimer = setTimeout(playOnce, 500);
   }
 
+  function isMobileViewport() {
+    return window.matchMedia("(max-width: 992px)").matches;
+  }
+
+  function stabilizeMobileMenuLayout() {
+    const header = document.querySelector(".menu-page-view .properties-N1");
+    if (!header) return;
+
+    const fixedBar = document.querySelector(".menu-page-view .fixed-consult-bar.is-split");
+
+    // 메뉴 상세페이지 이동 후 남는 헤더/메뉴 상태를 정리한다.
+    header.classList.remove("block-active");
+    header.querySelectorAll(".header-gnbitem").forEach((item) => {
+      item.classList.remove("item-active");
+    });
+
+    const fullMenu = header.querySelector(".header-fullmenu");
+    if (fullMenu) {
+      fullMenu.classList.remove("fullmenu-active");
+    }
+
+    header.querySelectorAll(".header-sublist").forEach((sublist) => {
+      sublist.style.display = "";
+      sublist.style.height = "";
+      sublist.style.overflow = "";
+    });
+
+    if (isMobileViewport()) {
+      document.documentElement.style.setProperty("overflow-x", "hidden");
+      document.body.style.setProperty("overflow-x", "hidden");
+    } else {
+      document.documentElement.style.removeProperty("overflow-x");
+      document.body.style.removeProperty("overflow-x");
+    }
+
+    if (fixedBar) {
+      fixedBar.style.removeProperty("position");
+      fixedBar.style.removeProperty("left");
+      fixedBar.style.removeProperty("right");
+      fixedBar.style.removeProperty("bottom");
+      fixedBar.style.removeProperty("width");
+      fixedBar.style.removeProperty("max-width");
+      fixedBar.style.removeProperty("z-index");
+      fixedBar.style.removeProperty("transform");
+      fixedBar.style.removeProperty("-webkit-transform");
+    }
+  }
+
+  function bindMobileLayoutGuard() {
+    if (mobileLayoutGuardBound) return;
+    mobileLayoutGuardBound = true;
+
+    const run = () => {
+      stabilizeMobileMenuLayout();
+      window.requestAnimationFrame(stabilizeMobileMenuLayout);
+      window.setTimeout(stabilizeMobileMenuLayout, 120);
+    };
+
+    window.addEventListener("pageshow", run);
+    window.addEventListener("resize", run);
+    window.addEventListener("orientationchange", run);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") run();
+    });
+  }
+
   function initMenuPage() {
     const { group, tab, variant } = getStateFromUrl();
     setHeaderActive(group);
@@ -706,6 +773,8 @@
     renderTabs(group, tab, variant);
     renderContent(group, tab, variant);
     initContentReveal();
+    bindMobileLayoutGuard();
+    stabilizeMobileMenuLayout();
   }
 
   if (document.readyState === "loading") {

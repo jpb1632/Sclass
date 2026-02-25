@@ -24,4 +24,5 @@ Thumbs.db
 
 # temp/session
 .temha_session.json
+.backup/
 정준교-workspace/

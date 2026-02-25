@@ -1,11 +1,34 @@
 ﻿(function () {
   "use strict";
 
-  var GAS_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw20Pc5_fXXOW_q-ojndiI2wr-YOxNwAblROeZB5e2Bs-QZHFm5_o8iHsn-Ch6CYxdFAg/exec";
+  function getWebhookUrl() {
+    if (window.__LEAD_WEBHOOK_URL__) {
+      return String(window.__LEAD_WEBHOOK_URL__).trim();
+    }
+
+    var meta = document.querySelector("meta[name='gas-webhook-url']");
+    if (meta && meta.content) {
+      return String(meta.content).trim();
+    }
+
+    return "";
+  }
+
+  function isValidWebhookUrl(url) {
+    try {
+      var parsed = new URL(url, window.location.href);
+      return parsed.protocol === "https:" && parsed.hostname === "script.google.com";
+    } catch (_) {
+      return false;
+    }
+  }
+
+  var GAS_WEBHOOK_URL = getWebhookUrl();
 
   var SUCCESS_MESSAGE = "상담신청이 접수되었습니다. 곧 연락드리겠습니다.";
   var FAILURE_MESSAGE = "전송 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.";
-  var URL_REQUIRED_MESSAGE = "Google Apps Script URL이 설정되지 않았습니다.";
+  var URL_REQUIRED_MESSAGE = "상담 접수 URL이 설정되지 않았습니다.";
+  var URL_INVALID_MESSAGE = "상담 접수 URL 형식이 올바르지 않습니다.";
 
   var NAME_PATTERN = /^[A-Za-z\uAC00-\uD7A3]+$/;
   var PHONE_PATTERN = /^010\d{8}$/;
@@ -26,14 +49,23 @@
     return String(value || "").replace(/\D/g, "").slice(0, 11);
   }
 
-  function setLoading(button, loading) {
+  function setLoading(button, loading, mode) {
     if (!button) return;
     if (loading) {
       if (!button.dataset.defaultText) button.dataset.defaultText = button.innerHTML;
       button.disabled = true;
-      button.innerHTML = "전송중...";
+      if (mode === "spinner") {
+        button.classList.add("is-loading");
+        button.innerHTML =
+          '<span class="consult-submit-spinner" aria-hidden="true"></span>' +
+          '<span class="visually-hidden">전송중</span>';
+      } else {
+        button.classList.remove("is-loading");
+        button.innerHTML = "전송중...";
+      }
     } else {
       button.disabled = false;
+      button.classList.remove("is-loading");
       if (button.dataset.defaultText) button.innerHTML = button.dataset.defaultText;
     }
   }
@@ -80,6 +112,9 @@
   async function sendToGAS(payload) {
     if (!GAS_WEBHOOK_URL) {
       throw new Error(URL_REQUIRED_MESSAGE);
+    }
+    if (!isValidWebhookUrl(GAS_WEBHOOK_URL)) {
+      throw new Error(URL_INVALID_MESSAGE);
     }
 
     var params = new URLSearchParams();
@@ -163,6 +198,8 @@
           source: "consultation",
           name: sanitizeName(nameInput ? nameInput.value : ""),
           phone: sanitizePhone(phoneInput ? phoneInput.value : ""),
+          origin: window.location.origin,
+          page: window.location.pathname,
           purpose: purposeInputs
             .filter(function (el) {
               return el.checked;
@@ -252,6 +289,8 @@
           source: "quick_bar",
           name: sanitizeName(nameInput ? nameInput.value : ""),
           phone: sanitizePhone(phoneInput ? phoneInput.value : ""),
+          origin: window.location.origin,
+          page: window.location.pathname,
           agree: !!(agreeInput && agreeInput.checked),
           honeypot: honeypotInput ? String(honeypotInput.value || "").trim() : ""
         };
@@ -268,7 +307,7 @@
           return;
         }
 
-        setLoading(submitBtn, true);
+        setLoading(submitBtn, true, "spinner");
         try {
           await sendToGAS(payload);
           alert(SUCCESS_MESSAGE);
@@ -279,7 +318,7 @@
         } catch (error) {
           alert(error && error.message ? error.message : FAILURE_MESSAGE);
         } finally {
-          setLoading(submitBtn, false);
+          setLoading(submitBtn, false, "spinner");
         }
       },
       true
@@ -296,3 +335,4 @@
     wireQuickBarForm();
   }
 })();
+
