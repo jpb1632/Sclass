@@ -303,6 +303,27 @@ ${html.trim()}
 </html>
     `.trim();
     fs.writeFileSync(path.join(staticPageDir, `${page}.html`), headHtml, 'utf8');
+
+    // Copy page-level companion files (e.g. menu-page.html/css/js, lead-submit.js)
+    // so preview always reflects workspace and does not depend on stale static leftovers.
+    const passthroughExcludes = new Set([
+      '.page_id',
+      'block_order.json',
+      PAGE_META_FILE,
+      `${page}.html`,
+      'style.css',
+      'style.js'
+    ]);
+    const passthroughFiles = fs.readdirSync(pageDir).filter((name) => {
+      const fullPath = path.join(pageDir, name);
+      if (!fs.lstatSync(fullPath).isFile()) return false;
+      if (passthroughExcludes.has(name)) return false;
+      const ext = path.extname(name).toLowerCase();
+      return ['.html', '.css', '.js', '.json', '.txt'].includes(ext);
+    });
+    for (const file of passthroughFiles) {
+      fs.copyFileSync(path.join(pageDir, file), path.join(staticPageDir, file));
+    }
   }
   done();
   (async () => {

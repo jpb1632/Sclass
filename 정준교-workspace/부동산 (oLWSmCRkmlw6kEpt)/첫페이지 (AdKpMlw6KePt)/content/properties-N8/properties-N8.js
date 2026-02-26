@@ -12,7 +12,7 @@
       items.forEach(function(item, idx) {
         window.setTimeout(function() {
           item.classList.add('in-view');
-        }, idx * 420);
+        }, idx * 180);
       });
     };
 

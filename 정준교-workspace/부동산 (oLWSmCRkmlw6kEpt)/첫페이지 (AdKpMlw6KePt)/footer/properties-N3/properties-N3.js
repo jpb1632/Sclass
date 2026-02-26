@@ -11,8 +11,16 @@
       return String(value || "").replace(/\D/g, "").slice(0, 11);
     }
 
+    function hoistFixedConsultBar($bar) {
+      const node = $bar && $bar[0];
+      if (!node || node.dataset.fixedHoisted === "true") return;
+      node.dataset.fixedHoisted = "true";
+      document.body.appendChild(node);
+    }
+
     $(".fixed-consult-bar.is-split").each(function() {
       const $block = $(this);
+      hoistFixedConsultBar($block);
       const $nameInput = $block.find(".consult-form input[type='text']").first();
       const $phoneInput = $block.find(".consult-form input[type='tel']").first();
       const $privacyCheck = $block.find(".consult-privacy-check").first();

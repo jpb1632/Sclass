@@ -704,9 +704,18 @@
     return window.matchMedia("(max-width: 992px)").matches;
   }
 
+  function hoistFixedConsultBar() {
+    const fixedBar = document.querySelector(".menu-page-view .fixed-consult-bar.is-split");
+    if (!fixedBar || fixedBar.dataset.fixedHoisted === "true") return;
+    fixedBar.dataset.fixedHoisted = "true";
+    document.body.appendChild(fixedBar);
+  }
+
   function stabilizeMobileMenuLayout() {
     const header = document.querySelector(".menu-page-view .properties-N1");
     if (!header) return;
+
+    hoistFixedConsultBar();
 
     const fixedBar = document.querySelector(".menu-page-view .fixed-consult-bar.is-split");
 
