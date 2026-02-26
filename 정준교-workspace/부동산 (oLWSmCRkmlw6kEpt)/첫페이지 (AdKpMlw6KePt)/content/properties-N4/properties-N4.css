@@ -179,6 +179,100 @@ html, body { margin: 0 !important; padding: 0 !important; }
   display: none !important;
 }
 
+@media (min-width: 993px) {
+  .properties-N4 .hero-copy-top,
+  .properties-N4 .hero-copy-main-left,
+  .properties-N4 .hero-copy-main-right,
+  .properties-N4 .hero-copy-bottom {
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+
+  .properties-N4 .hero-copy-top,
+  .properties-N4 .hero-copy-main-left {
+    animation: n4-copy-fade-left 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  }
+
+  .properties-N4 .hero-copy-top {
+    animation-delay: 0.15s;
+  }
+
+  .properties-N4 .hero-copy-main-left {
+    animation-delay: 0.45s;
+  }
+
+  .properties-N4 .hero-copy-main-right {
+    animation: n4-copy-fade-right 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    animation-delay: 0.75s;
+  }
+
+  .properties-N4 .hero-copy-bottom {
+    animation: n4-copy-fade-up 1.6s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+    animation-delay: 1.05s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .properties-N4 .hero-copy-top,
+  .properties-N4 .hero-copy-main-left,
+  .properties-N4 .hero-copy-main-right,
+  .properties-N4 .hero-copy-bottom {
+    opacity: 1;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .properties-N4 .hero-copy .hero-copy-mobile {
+    opacity: 1;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@keyframes n4-copy-fade-left {
+  from {
+    opacity: 0;
+    transform: translateX(-4.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes n4-copy-fade-right {
+  from {
+    opacity: 0;
+    transform: translateX(4.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes n4-copy-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(4.4rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes n4-copy-mobile-up {
+  from {
+    opacity: 0;
+    transform: translateY(3.2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .properties-N4 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -322,6 +416,10 @@ html, body { margin: 0 !important; padding: 0 !important; }
     display: block !important;
     width: min(42rem, 92vw);
     margin: -0.8rem auto 0;
+    opacity: 0;
+    transform: translateY(3.2rem);
+    will-change: transform, opacity;
+    animation: n4-copy-mobile-up 1.35s cubic-bezier(0.22, 0.61, 0.36, 1) 0.2s forwards;
   }
 
   .properties-N4 .hero-copy-top {
@@ -355,7 +453,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
 
   .properties-N4 .popup-stage {
     width: 98vw;
-    gap: 0.45rem;
+    gap: 0.15rem;
     transform: none;
   }
 
@@ -363,7 +461,8 @@ html, body { margin: 0 !important; padding: 0 !important; }
     width: min(34.2rem, 84.6vw);
     position: relative;
     overflow: hidden;
-    padding-bottom: 2.8rem;
+    padding-bottom: 0;
+    margin-bottom: 0.25rem;
   }
 
   .properties-N4 .popup-track {
@@ -411,7 +510,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
     display: flex;
     position: absolute;
     left: 50%;
-    bottom: 0.8rem;
+    bottom: 0.95rem;
     transform: translateX(-50%);
     gap: 0.7rem;
     margin-top: 0;
@@ -433,7 +532,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
   }
 
   .properties-N4 .popup-actions {
-    margin-top: 0.2rem;
+    margin-top: -0.1rem;
   }
 
   .properties-N4 .popup-actions {
