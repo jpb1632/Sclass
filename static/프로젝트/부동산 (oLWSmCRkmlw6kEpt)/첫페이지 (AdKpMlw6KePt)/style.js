@@ -169,9 +169,12 @@
       const $next = $block.find(".popup-next");
       const $close = $block.find(".popup-close-btn");
       const $dayoff = $block.find(".popup-dayoff-check");
+      const MOBILE_POPUP_AUTOPLAY_MS = 3200;
       let currentIndex = 0;
       let touchStartX = 0;
       let touchStartY = 0;
+      let autoplayTimer = null;
+      let onVisibilityChange = null;
 
       $block.find(".popup-card img").attr("draggable", "false");
 
@@ -201,6 +204,24 @@
         renderPopupSlider();
       }
 
+      function stopAutoplay() {
+        if (!autoplayTimer) return;
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        if (!isMobilePopup() || $cards.length < 2 || $overlay.hasClass("is-hidden")) return;
+        autoplayTimer = window.setInterval(function() {
+          goTo(currentIndex + 1);
+        }, MOBILE_POPUP_AUTOPLAY_MS);
+      }
+
+      function restartAutoplay() {
+        startAutoplay();
+      }
+
       function buildDots() {
         if (!$cards.length) return;
         $dots.empty();
@@ -220,17 +241,20 @@
       $prev.on("click", function() {
         if (!isMobilePopup()) return;
         goTo(currentIndex - 1);
+        restartAutoplay();
       });
 
       $next.on("click", function() {
         if (!isMobilePopup()) return;
         goTo(currentIndex + 1);
+        restartAutoplay();
       });
 
       $dots.on("click", ".popup-dot", function() {
         if (!isMobilePopup()) return;
         const index = Number($(this).data("index") || 0);
         goTo(index);
+        restartAutoplay();
       });
 
       $popupArea.on("touchstart", function(event) {
@@ -253,20 +277,41 @@
         } else {
           goTo(currentIndex - 1);
         }
+        restartAutoplay();
       });
 
       $(window).on("resize orientationchange", function() {
         renderPopupSlider();
+        startAutoplay();
       });
 
       if (isPopupHidden()) {
+        stopAutoplay();
         hidePopup($overlay);
         return;
       }
 
       goTo(0);
+      startAutoplay();
+
+      onVisibilityChange = function() {
+        if ($overlay.hasClass("is-hidden")) {
+          stopAutoplay();
+          return;
+        }
+        if (document.hidden) {
+          stopAutoplay();
+        } else {
+          startAutoplay();
+        }
+      };
+      document.addEventListener("visibilitychange", onVisibilityChange);
 
       $close.on("click", function() {
+        stopAutoplay();
+        if (onVisibilityChange) {
+          document.removeEventListener("visibilitychange", onVisibilityChange);
+        }
         if ($dayoff.is(":checked")) {
           try {
             localStorage.setItem(POPUP_HIDE_KEY, String(getTomorrowMidnight()));

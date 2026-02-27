@@ -1127,10 +1127,10 @@ to {
 .properties-N4 .popup-stage {
     width: 98vw;
     gap: 0.15rem;
-    transform: none
+    transform: translateY(-2rem)
  }
 .properties-N4 .popup-area {
-    width: min(34.2rem, 84.6vw);
+    width: min(32.5rem, 80.4vw);
     position: relative;
     overflow: hidden;
     padding-bottom: 0;
