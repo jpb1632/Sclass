@@ -2,6 +2,52 @@
   const SITE_NAME = "양주 백석 모아엘가 그랑데";
   const FIXED_CONTENT_TITLE = "양주 백석 모아엘가 그랑데";
 
+  function initBasicContentGuard() {
+    if (window.__basicContentGuardInitialized) return;
+    window.__basicContentGuardInitialized = true;
+
+    const editableSelector = "input, textarea, [contenteditable='true']";
+
+    document.addEventListener(
+      "contextmenu",
+      function (event) {
+        if (event.target && event.target.closest(editableSelector)) return;
+        event.preventDefault();
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "dragstart",
+      function (event) {
+        const target = event.target;
+        if (!target) return;
+        if (target.tagName === "IMG" || target.closest("img")) {
+          event.preventDefault();
+        }
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+        const key = String(event.key || "").toLowerCase();
+        const ctrlOrMeta = event.ctrlKey || event.metaKey;
+
+        if (ctrlOrMeta && event.shiftKey && (key === "i" || key === "j" || key === "c")) {
+          event.preventDefault();
+          return;
+        }
+
+        if (ctrlOrMeta && (key === "u" || key === "s")) {
+          event.preventDefault();
+        }
+      },
+      { capture: true }
+    );
+  }
+
   const MENU_CONFIG = {
     business: {
       label: "사업안내",
@@ -776,6 +822,8 @@
   }
 
   function initMenuPage() {
+    initBasicContentGuard();
+
     const { group, tab, variant } = getStateFromUrl();
     setHeaderActive(group);
     renderHero(group, tab);

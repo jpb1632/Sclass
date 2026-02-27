@@ -14,16 +14,16 @@
 }
 
 .properties-N3 .footer-container {
-  padding-top: 2.2rem;
-  padding-bottom: 2.2rem;
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
 }
 
 .properties-N3 .footer-main {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 3.6rem;
-  padding-bottom: 1.8rem;
+  gap: 2.2rem;
+  padding-bottom: 1.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.35);
 }
 
@@ -43,7 +43,7 @@
 }
 
 .properties-N3 .footer-line+.footer-line {
-  margin-top: 1.2rem;
+  margin-top: 0.7rem;
 }
 
 .properties-N3 .footer-line .key,
@@ -71,7 +71,7 @@
 
 .properties-N3 .footer-address,
 .properties-N3 .footer-note {
-  margin: 1.4rem 0 0;
+  margin: 0.8rem 0 0;
   color: rgba(255, 255, 255, 0.82);
   font-size: 1.4rem;
   line-height: 1.5;
@@ -80,7 +80,7 @@
 
 .properties-N3 .footer-main-right strong {
   display: block;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.7rem;
   color: #fff;
   font-size: 1.8rem;
   font-weight: 700;
@@ -95,7 +95,7 @@
 }
 
 .properties-N3 .footer-main-right p+p {
-  margin-top: 1.4rem;
+  margin-top: 0.8rem;
 }
 
 .properties-N3 .footer-main-right .key,
@@ -104,7 +104,7 @@
 }
 
 .properties-N3 .footer-copyright {
-  margin: 1.6rem 0 0;
+  margin: 1rem 0 0;
   color: #fff;
   font-size: 1.4rem;
   font-weight: 500;
@@ -226,14 +226,14 @@
   }
 
   .properties-N3 .footer-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
   }
 
   .properties-N3 .footer-main {
     flex-direction: column;
-    gap: 1.6rem;
-    padding-bottom: 1.4rem;
+    gap: 1.2rem;
+    padding-bottom: 1rem;
   }
 
   .properties-N3 .footer-main-right {
@@ -247,14 +247,14 @@
 
   .properties-N3 .footer-address,
   .properties-N3 .footer-note {
-    margin-top: 1rem;
+    margin-top: 0.7rem;
     font-size: 1.3rem;
     line-height: 1.45;
   }
 
   .properties-N3 .footer-main-right strong {
     font-size: 1.6rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
   }
 
   .properties-N3 .footer-main-right .key,
@@ -263,11 +263,11 @@
   }
 
   .properties-N3 .footer-main-right p+p {
-    margin-top: 0.9rem;
+    margin-top: 0.6rem;
   }
 
   .properties-N3 .footer-copyright {
-    margin-top: 1.2rem;
+    margin-top: 0.8rem;
     font-size: 1.3rem;
     line-height: 1.35;
   }
@@ -275,7 +275,7 @@
 
 /* Keep footer content visible above the fixed consult bar */
 .properties-N3 .footer-container {
-  padding-bottom: calc(2.2rem + (var(--consult-base-height, 76) * 1px * var(--consult-scale, 1)));
+  padding-bottom: calc(1.4rem + (var(--consult-base-height, 76) * 1px * var(--consult-scale, 1)));
 }
 
 

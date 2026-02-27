@@ -1,6 +1,9 @@
 ﻿(function () {
   "use strict";
 
+  var DEFAULT_GAS_WEBHOOK_URL =
+    "https://script.google.com/macros/s/AKfycbyQgRVQi1EwbyY1QwKHV7J7jh_T-8zgDiR1_AaTardaOm53evbB7uj90jL1FGBI_7JH9A/exec";
+
   function getWebhookUrl() {
     if (window.__LEAD_WEBHOOK_URL__) {
       return String(window.__LEAD_WEBHOOK_URL__).trim();
@@ -11,7 +14,7 @@
       return String(meta.content).trim();
     }
 
-    return "";
+    return DEFAULT_GAS_WEBHOOK_URL;
   }
 
   function isValidWebhookUrl(url) {

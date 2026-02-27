@@ -50,8 +50,8 @@
 /* Scroll reveal for N8 image stack */
 .properties-N8.reveal-ready .addr {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(44px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
   will-change: opacity, transform;
 }
 
@@ -109,8 +109,8 @@
 
 @media (max-width: 992px) {
   .properties-N8 {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
   }
 
   .properties-N8 .title-area {

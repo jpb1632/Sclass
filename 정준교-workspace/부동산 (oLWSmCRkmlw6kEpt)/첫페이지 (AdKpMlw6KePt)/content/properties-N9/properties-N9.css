@@ -2,7 +2,7 @@
   overflow: hidden;
   position: relative;
   padding-top: 3rem;
-  padding-bottom: 14rem;
+  padding-bottom: 4rem;
 }
 
 /* Icon-font fallback fix */
@@ -282,7 +282,7 @@
 @media (max-width: 992px) {
   .properties-N9 {
     padding-top: 3rem;
-    padding-bottom: 5rem;
+    padding-bottom: 2rem;
   }
 
   .properties-N9 .title-area {
@@ -327,3 +327,4 @@
     max-width: 100%;
   }
 }
+

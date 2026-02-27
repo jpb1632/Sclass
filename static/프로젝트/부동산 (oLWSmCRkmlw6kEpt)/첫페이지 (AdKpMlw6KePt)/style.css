@@ -1236,11 +1236,12 @@ to {
  }
 }
 /* properties-N5 */
+/* Scroll reveal for N5 cards */
 .properties-N5 {
   overflow: hidden;
   position: relative;
-  padding-top: 7rem;
-  padding-bottom: 10rem;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
   background: #eef3f8
 }
 .properties-N5 .contents-inner {
@@ -1260,7 +1261,7 @@ to {
   background: url("../resources/icons/ico_diamond.svg") no-repeat center/contain
 }
 .properties-N5 .n5-title-num {
-  color: #ef0f6f;
+  color: #c00d6f;
   font-size: 1.4em;
   font-weight: 900;
   line-height: 1
@@ -1301,7 +1302,7 @@ to {
 .properties-N5 .n5-card-sub {
   font-size: 1.6rem;
   font-weight: 600;
-  color: #ef0f6f;
+  color: #c00d6f;
   line-height: 1.3;
   margin-top: 0.4rem
 }
@@ -1350,12 +1351,22 @@ to {
   margin-left: 0.6rem
 }
 .properties-N5 .swiper-pagination-bullet-active {
-  background: var(--primary)
+  background: #c00d6f
+}
+.properties-N5.reveal-ready .n5-card {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 1.25s ease, transform 1.25s ease;
+  will-change: opacity, transform
+}
+.properties-N5.reveal-ready .n5-card.in-view {
+  opacity: 1;
+  transform: translateY(0)
 }
 @media (max-width: 992px) {
   .properties-N5 {
-    padding-top: 5rem;
-    padding-bottom: 7rem
+    padding-top: 4rem;
+    padding-bottom: 4rem
   }
   .properties-N5 .title-area {
     flex-direction: column;
@@ -1384,12 +1395,20 @@ to {
     margin-top: 1.6rem
   }
 }
+@media (prefers-reduced-motion: reduce) {
+  .properties-N5.reveal-ready .n5-card {
+    opacity: 1;
+    transform: none;
+    transition: none
+  }
+}
 /* properties-N6 */
+/* Scroll reveal for N6 images */
 .properties-N6 {
   overflow: hidden;
   position: relative;
-  padding-top: 6rem;
-  padding-bottom: 6rem
+  padding-top: 0;
+  padding-bottom: 2rem
 }
 .properties-N6 .contents-inner {
   width: 100%
@@ -1412,10 +1431,29 @@ to {
   width: 100%;
   height: auto
 }
+.properties-N6.reveal-ready .n6-image-item {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity 1.3s ease, transform 1.3s ease;
+  will-change: opacity, transform
+}
+.properties-N6.reveal-ready .n6-image-item.in-view {
+  opacity: 1;
+  transform: translateY(0)
+}
+.properties-N6 .n6-image-item-second img {
+  width: 100%;
+  margin: 0 auto
+}
+@media (min-width: 993px) {
+  .properties-N6 .n6-image-item-second img {
+    width: 70%
+  }
+}
 @media (max-width: 992px) {
   .properties-N6 {
-    padding-top: 4rem;
-    padding-bottom: 4rem
+    padding-top: 0;
+    padding-bottom: 1rem
   }
   .properties-N6 .n6-image-list {
     max-width: none
@@ -1423,12 +1461,23 @@ to {
   .properties-N6 .n6-image-item+.n6-image-item {
     margin-top: 2rem
   }
+  .properties-N6 .n6-image-item-second img {
+    width: 100%
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .properties-N6.reveal-ready .n6-image-item {
+    opacity: 1;
+    transform: none;
+    transition: none
+  }
 }
 /* properties-N7 */
+/* Scroll reveal for N7 image area */
 .properties-N7 {
   overflow: hidden;
   position: relative;
-  padding-top: 14rem;
+  padding-top: 4rem;
   padding-bottom: 4rem
 }
 .properties-N7 .contents-inner {
@@ -1510,6 +1559,9 @@ to {
   margin-top: 1.4rem;
   color: #767676
 }
+.properties-N7 .desc .desc-text-mobile {
+  display: none
+}
 .properties-N7 .col-right {
   flex: 1 1 72rem
 }
@@ -1520,6 +1572,16 @@ to {
 .properties-N7 .thumb {
   width: 100%;
   margin-top: 4rem
+}
+.properties-N7.reveal-ready .thumb {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity 1.3s ease, transform 1.3s ease;
+  will-change: opacity, transform
+}
+.properties-N7.reveal-ready .thumb.in-view {
+  opacity: 1;
+  transform: translateY(0)
 }
 .properties-N7 .col-right .item {
   aspect-ratio: 72 / 41
@@ -1544,13 +1606,16 @@ to {
   visibility: hidden
 }
 .properties-N7 .col-right .n7-item-a {
-  background: url("../resources/images/84a_2.png") no-repeat center/cover
+  background: url("../resources/images/59mAC_1.png") no-repeat center/cover
 }
 .properties-N7 .col-right .n7-item-b {
-  background: url("../resources/images/84b_2.png") no-repeat center/cover
+  background: url("../resources/images/59mBD_1.png") no-repeat center/cover
 }
 .properties-N7 .col-right .n7-item-c {
-  background: url("../resources/images/84c_2.png") no-repeat center/cover
+  background: url("../resources/images/84mAC_1.png") no-repeat center/cover
+}
+.properties-N7 .col-right .n7-item-d {
+  background: url("../resources/images/84mBD_1.png") no-repeat center/cover
 }
 @media (max-width: 1200px) {
   .properties-N7 .info-desc {
@@ -1559,7 +1624,7 @@ to {
 }
 @media (max-width: 992px) {
   .properties-N7 {
-    padding-top: 7rem;
+    padding-top: 3rem;
     padding-bottom: 4rem
   }
   .properties-N7 .fullscreen {
@@ -1584,6 +1649,25 @@ to {
   }
   .properties-N7 .tabset.tabset-solid .tabset-list.tabset-lg .tabset-item:first-child {
     padding-left: 0
+  }
+  .properties-N7 .tabset .tabset-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.6rem;
+    justify-content: stretch
+  }
+  .properties-N7 .tabset.tabset-solid .tabset-list.tabset-lg .tabset-item {
+    padding: 0
+  }
+  .properties-N7 .tabset .tabset-link {
+    justify-content: center;
+    min-height: 3.8rem;
+    padding: 0.8rem 0.3rem
+  }
+  .properties-N7 .tabset .tabset-link span {
+    font-size: 1.2rem;
+    letter-spacing: -0.02em;
+    white-space: nowrap
   }
   .properties-N7 .info .item {
     padding: 2.4rem;
@@ -1610,16 +1694,23 @@ to {
     margin-top: 3rem
   }
   .properties-N7 .col-right .item {
-    aspect-ratio: 41 / 30
+    aspect-ratio: 41 / 30;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #fff
   }
   .properties-N7 .col-right .n7-item-a {
-    background-image: url("../resources/images/84a_2.png")
+    background-image: url("../resources/images/59mAC_1.png")
   }
   .properties-N7 .col-right .n7-item-b {
-    background-image: url("../resources/images/84b_2.png")
+    background-image: url("../resources/images/59mBD_1.png")
   }
   .properties-N7 .col-right .n7-item-c {
-    background-image: url("../resources/images/84c_2.png")
+    background-image: url("../resources/images/84mAC_1.png")
+  }
+  .properties-N7 .col-right .n7-item-d {
+    background-image: url("../resources/images/84mBD_1.png")
   }
   .properties-N7 .col-right .item .hover-img {
     opacity: 0;
@@ -1630,6 +1721,19 @@ to {
   }
   .properties-N7 .desc p {
     margin-top: 1rem
+  }
+  .properties-N7 .desc .desc-text-pc {
+    display: none
+  }
+  .properties-N7 .desc .desc-text-mobile {
+    display: block
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .properties-N7.reveal-ready .thumb {
+    opacity: 1;
+    transform: none;
+    transition: none
   }
 }
 /* properties-N8 */
@@ -1677,8 +1781,8 @@ to {
 }
 .properties-N8.reveal-ready .addr {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  transform: translateY(44px);
+  transition: opacity 1.4s ease, transform 1.4s ease;
   will-change: opacity, transform
 }
 .properties-N8.reveal-ready .addr.in-view {
@@ -1727,8 +1831,8 @@ to {
 }
 @media (max-width: 992px) {
   .properties-N8 {
-    padding-top: 2rem;
-    padding-bottom: 2rem
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem
   }
   .properties-N8 .title-area {
     flex-direction: column;
@@ -1779,7 +1883,7 @@ to {
   overflow: hidden;
   position: relative;
   padding-top: 3rem;
-  padding-bottom: 14rem
+  padding-bottom: 4rem
 }
 .properties-N9 .checkset.checkset-fill .checkset-input:checked+.checkset-label::after {
   content: "";
@@ -2008,7 +2112,7 @@ to {
 @media (max-width: 992px) {
   .properties-N9 {
     padding-top: 3rem;
-    padding-bottom: 5rem
+    padding-bottom: 2rem
   }
   .properties-N9 .title-area {
     flex-direction: column;
@@ -2065,15 +2169,15 @@ to {
   border-top: 0
 }
 .properties-N3 .footer-container {
-  padding-top: 2.2rem;
-  padding-bottom: calc(2.2rem + (var(--consult-base-height, 76) * 1px * var(--consult-scale, 1)))
+  padding-top: 1.4rem;
+  padding-bottom: calc(1.4rem + (var(--consult-base-height, 76) * 1px * var(--consult-scale, 1)))
 }
 .properties-N3 .footer-main {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 3.6rem;
-  padding-bottom: 1.8rem;
+  gap: 2.2rem;
+  padding-bottom: 1.1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.35)
 }
 .properties-N3 .footer-main-left {
@@ -2089,7 +2193,7 @@ to {
   gap: 1rem
 }
 .properties-N3 .footer-line+.footer-line {
-  margin-top: 1.2rem
+  margin-top: 0.7rem
 }
 .properties-N3 .footer-line .key,
 .properties-N3 .footer-main-right .key {
@@ -2113,7 +2217,7 @@ to {
 }
 .properties-N3 .footer-address,
 .properties-N3 .footer-note {
-  margin: 1.4rem 0 0;
+  margin: 0.8rem 0 0;
   color: rgba(255, 255, 255, 0.82);
   font-size: 1.4rem;
   line-height: 1.5;
@@ -2121,7 +2225,7 @@ to {
 }
 .properties-N3 .footer-main-right strong {
   display: block;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.7rem;
   color: #fff;
   font-size: 1.8rem;
   font-weight: 700;
@@ -2134,14 +2238,14 @@ to {
   gap: 0.8rem
 }
 .properties-N3 .footer-main-right p+p {
-  margin-top: 1.4rem
+  margin-top: 0.8rem
 }
 .properties-N3 .footer-main-right .key,
 .properties-N3 .footer-main-right .value {
   font-size: 1.4rem
 }
 .properties-N3 .footer-copyright {
-  margin: 1.6rem 0 0;
+  margin: 1rem 0 0;
   color: #fff;
   font-size: 1.4rem;
   font-weight: 500;
@@ -2471,6 +2575,28 @@ body {
   cursor: pointer;
   letter-spacing: -0.01em
 }
+.fixed-consult-bar.is-split .consult-submit.is-loading {
+  pointer-events: none
+}
+.fixed-consult-bar.is-split .consult-submit .consult-submit-spinner {
+  width: calc(14px * var(--consult-scale));
+  height: calc(14px * var(--consult-scale));
+  border-radius: 50%;
+  border: 2px solid rgba(17, 17, 17, 0.28);
+  border-top-color: #111;
+  animation: consult-submit-spin 0.8s linear infinite
+}
+.fixed-consult-bar.is-split .consult-submit .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0
+}
 .fixed-consult-bar.is-split .consult-form-title::before,
 .fixed-consult-bar.is-split .consult-form-title::after,
 .fixed-consult-bar.is-split .consult-submit::before,
@@ -2490,13 +2616,13 @@ body {
     padding-bottom: 0
   }
 .properties-N3 .footer-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem
   }
 .properties-N3 .footer-main {
     flex-direction: column;
-    gap: 1.6rem;
-    padding-bottom: 1.4rem
+    gap: 1.2rem;
+    padding-bottom: 1rem
   }
 .properties-N3 .footer-main-right {
     flex: none
@@ -2507,23 +2633,23 @@ body {
   }
 .properties-N3 .footer-address,
   .properties-N3 .footer-note {
-    margin-top: 1rem;
+    margin-top: 0.7rem;
     font-size: 1.3rem;
     line-height: 1.45
   }
 .properties-N3 .footer-main-right strong {
     font-size: 1.6rem;
-    margin-bottom: 0.8rem
+    margin-bottom: 0.6rem
   }
 .properties-N3 .footer-main-right .key,
   .properties-N3 .footer-main-right .value {
     font-size: 1.3rem
   }
 .properties-N3 .footer-main-right p+p {
-    margin-top: 0.9rem
+    margin-top: 0.6rem
   }
 .properties-N3 .footer-copyright {
-    margin-top: 1.2rem;
+    margin-top: 0.8rem;
     font-size: 1.3rem;
     line-height: 1.35
   }
@@ -2589,6 +2715,11 @@ body {
   }
 .properties-N3 .footer-container {
     padding-bottom: calc(2rem + ((var(--consult-base-height) + 20) * 1px * var(--consult-scale)))
+  }
+}
+@keyframes consult-submit-spin {
+to {
+    transform: rotate(360deg)
   }
 }
 @media (min-width: 901px) {

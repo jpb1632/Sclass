@@ -139,6 +139,65 @@
 (function() {
   const POPUP_HIDE_KEY = "sclass_popup_hide_until";
 
+  function initBasicContentGuard() {
+    if (window.__basicContentGuardInitialized) return;
+    window.__basicContentGuardInitialized = true;
+
+    const editableSelector = "input, textarea, [contenteditable='true']";
+
+    document.addEventListener(
+      "contextmenu",
+      function(event) {
+        if (event.target && event.target.closest(editableSelector)) return;
+        event.preventDefault();
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "dragstart",
+      function(event) {
+        const target = event.target;
+        if (!target) return;
+        if (target.tagName === "IMG" || target.closest("img")) {
+          event.preventDefault();
+        }
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+        const key = String(event.key || "").toLowerCase();
+        const ctrlOrMeta = event.ctrlKey || event.metaKey;
+
+        if (ctrlOrMeta && event.shiftKey && (key === "i" || key === "j" || key === "c")) {
+          event.preventDefault();
+          return;
+        }
+
+        if (ctrlOrMeta && (key === "u" || key === "s")) {
+          event.preventDefault();
+        }
+      },
+      { capture: true }
+    );
+  }
+
+  function ensureLeadSubmitLoaded() {
+    if (window.__leadSubmitBootstrapLoaded) return;
+    window.__leadSubmitBootstrapLoaded = true;
+
+    var loaded = document.querySelector("script[src$='lead-submit.js'], script[src*='lead-submit.js?']");
+    if (loaded) return;
+
+    var script = document.createElement("script");
+    script.src = "./lead-submit.js";
+    script.defer = true;
+    document.body.appendChild(script);
+  }
+
   function getTomorrowMidnight() {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime();
@@ -158,6 +217,9 @@
   }
 
   $(function() {
+    initBasicContentGuard();
+    ensureLeadSubmitLoaded();
+
     $(".properties-N4[id='pGmlW6KDwI']").each(function() {
       const $block = $(this);
       const $overlay = $block.find(".popup-overlay");
@@ -324,6 +386,41 @@
 })();
 
 (function() {
+  function initN5Reveal(sectionEl) {
+    if (!sectionEl) return;
+    var cards = sectionEl.querySelectorAll(".swiper-slide .n5-card");
+    if (!cards.length) return;
+
+    sectionEl.classList.add("reveal-ready");
+
+    var show = function() {
+      cards.forEach(function(card, idx) {
+        window.setTimeout(function() {
+          card.classList.add("in-view");
+        }, idx * 120);
+      });
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      show();
+      return;
+    }
+
+    var observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          show();
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.18,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    observer.observe(sectionEl);
+  }
+
   $(function() {
     $(".properties-N5[id='mbmLw6KE2H']").each(function() {
       const blockSelector = ".properties-N5[id='mbmLw6KE2H']";
@@ -350,15 +447,93 @@
           1024: { slidesPerView: 3, spaceBetween: 24 }
         }
       });
+
+      initN5Reveal(this);
     });
   });
 })();
 
+(function() {
+  function initN6Reveal() {
+    var section = document.querySelector('.properties-N6[id="Wtmlw6KE6z"]');
+    if (!section) return;
+
+    var items = section.querySelectorAll(".n6-image-item");
+    if (!items.length) return;
+
+    section.classList.add("reveal-ready");
+
+    var show = function() {
+      items.forEach(function(item, idx) {
+        window.setTimeout(function() {
+          item.classList.add("in-view");
+        }, idx * 220);
+      });
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      show();
+      return;
+    }
+
+    var observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          show();
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.18,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    observer.observe(section);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initN6Reveal);
+  } else {
+    initN6Reveal();
+  }
+})();
 
 (function() {
+  function initN7ThumbReveal(sectionEl) {
+    if (!sectionEl) return;
+    var thumb = sectionEl.querySelector(".thumb");
+    if (!thumb) return;
+
+    sectionEl.classList.add("reveal-ready");
+
+    var show = function() {
+      thumb.classList.add("in-view");
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      show();
+      return;
+    }
+
+    var observer = new IntersectionObserver(function(entries, obs) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          show();
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.18,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    observer.observe(sectionEl);
+  }
+
   $(function() {
-    $(".properties-N7[id=\'FgMLw6KEAS\']").each(function() {
+    $(".properties-N7[id='FgMLw6KEAS']").each(function() {
       const $block = $(this);
+
       // .tabset-link를 클릭했을 때 이벤트 핸들러 실행
       $block.find(".tabset-link").click(function() {
         const $idx = $(this).parent().index();
@@ -375,9 +550,12 @@
           .siblings()
           .removeClass("active");
       });
+
+      initN7ThumbReveal(this);
     });
   });
 })();
+
 ﻿(function() {
   function initN8Reveal() {
     var section = document.querySelector('.properties-N8[id="ciMLW6keFd"]');
@@ -392,7 +570,7 @@
       items.forEach(function(item, idx) {
         window.setTimeout(function() {
           item.classList.add('in-view');
-        }, idx * 180);
+        }, idx * 280);
       });
     };
 

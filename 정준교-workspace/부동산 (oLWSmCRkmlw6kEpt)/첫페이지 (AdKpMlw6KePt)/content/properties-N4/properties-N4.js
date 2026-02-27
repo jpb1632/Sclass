@@ -1,6 +1,65 @@
 (function() {
   const POPUP_HIDE_KEY = "sclass_popup_hide_until";
 
+  function initBasicContentGuard() {
+    if (window.__basicContentGuardInitialized) return;
+    window.__basicContentGuardInitialized = true;
+
+    const editableSelector = "input, textarea, [contenteditable='true']";
+
+    document.addEventListener(
+      "contextmenu",
+      function(event) {
+        if (event.target && event.target.closest(editableSelector)) return;
+        event.preventDefault();
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "dragstart",
+      function(event) {
+        const target = event.target;
+        if (!target) return;
+        if (target.tagName === "IMG" || target.closest("img")) {
+          event.preventDefault();
+        }
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+        const key = String(event.key || "").toLowerCase();
+        const ctrlOrMeta = event.ctrlKey || event.metaKey;
+
+        if (ctrlOrMeta && event.shiftKey && (key === "i" || key === "j" || key === "c")) {
+          event.preventDefault();
+          return;
+        }
+
+        if (ctrlOrMeta && (key === "u" || key === "s")) {
+          event.preventDefault();
+        }
+      },
+      { capture: true }
+    );
+  }
+
+  function ensureLeadSubmitLoaded() {
+    if (window.__leadSubmitBootstrapLoaded) return;
+    window.__leadSubmitBootstrapLoaded = true;
+
+    var loaded = document.querySelector("script[src$='lead-submit.js'], script[src*='lead-submit.js?']");
+    if (loaded) return;
+
+    var script = document.createElement("script");
+    script.src = "./lead-submit.js";
+    script.defer = true;
+    document.body.appendChild(script);
+  }
+
   function getTomorrowMidnight() {
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime();
@@ -20,6 +79,9 @@
   }
 
   $(function() {
+    initBasicContentGuard();
+    ensureLeadSubmitLoaded();
+
     $(".properties-N4[id='pGmlW6KDwI']").each(function() {
       const $block = $(this);
       const $overlay = $block.find(".popup-overlay");
