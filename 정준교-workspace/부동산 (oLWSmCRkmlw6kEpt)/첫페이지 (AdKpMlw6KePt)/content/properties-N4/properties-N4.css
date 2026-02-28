@@ -47,7 +47,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
   --t2-y: -19rem;
   --t3-x: 23.5rem;
   --t3-y: -18rem;
-  --t4-x: 20rem;
+  --t4-x: 22rem;
   --t4-y: 5rem;
 }
 
@@ -91,7 +91,7 @@ html, body { margin: 0 !important; padding: 0 !important; }
     --t1-x: 20rem;
     --t2-x: 20rem;
     --t3-x: 20rem;
-    --t4-x: 17.5rem;
+    --t4-x: 19rem;
   }
 }
 

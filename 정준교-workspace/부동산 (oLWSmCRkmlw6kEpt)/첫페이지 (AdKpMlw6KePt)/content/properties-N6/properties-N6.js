@@ -8,32 +8,33 @@
 
     section.classList.add("reveal-ready");
 
-    var show = function() {
-      items.forEach(function(item, idx) {
-        window.setTimeout(function() {
-          item.classList.add("in-view");
-        }, idx * 220);
-      });
+    var revealItem = function(item) {
+      if (!item) return;
+      item.classList.add("in-view");
     };
 
     if (!("IntersectionObserver" in window)) {
-      show();
+      items.forEach(function(item) {
+        revealItem(item);
+      });
       return;
     }
 
     var observer = new IntersectionObserver(function(entries, obs) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          show();
+          revealItem(entry.target);
           obs.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.18,
-      rootMargin: "0px 0px -8% 0px"
+      threshold: 0.2,
+      rootMargin: "0px 0px -12% 0px"
     });
 
-    observer.observe(section);
+    items.forEach(function(item) {
+      observer.observe(item);
+    });
   }
 
   if (document.readyState === "loading") {

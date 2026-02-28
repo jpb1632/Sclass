@@ -7,6 +7,21 @@
       const BASE_HEADER_TOP = -4;
       const DESKTOP_SECTION_SHIFT = -26;
       const MOBILE_SECTION_SHIFT = -26;
+      const COMPLEX_REMOVE_TABS = ["design", "system"];
+
+      function pruneComplexSubMenus() {
+        COMPLEX_REMOVE_TABS.forEach(function(tabKey) {
+          const href = `./menu-page.html?group=complex&tab=${tabKey}`;
+          $block
+            .find(`.header-subitem > .header-sublink[href="${href}"]`)
+            .closest(".header-subitem")
+            .remove();
+          $block
+            .find(`.fullmenu-subitem > .fullmenu-sublink[href="${href}"]`)
+            .closest(".fullmenu-subitem")
+            .remove();
+        });
+      }
 
       function getBaseSectionShift() {
         return window.innerWidth <= 992 ? MOBILE_SECTION_SHIFT : DESKTOP_SECTION_SHIFT;
@@ -102,6 +117,7 @@
       }
       handleScroll();
       forceTopGapFix();
+      pruneComplexSubMenus();
       $(window).on("load resize orientationchange", forceTopGapFix);
       // 전체 메뉴 열기/닫기 처리
       function handleFullMenu() {
@@ -463,32 +479,33 @@
 
     section.classList.add("reveal-ready");
 
-    var show = function() {
-      items.forEach(function(item, idx) {
-        window.setTimeout(function() {
-          item.classList.add("in-view");
-        }, idx * 220);
-      });
+    var revealItem = function(item) {
+      if (!item) return;
+      item.classList.add("in-view");
     };
 
     if (!("IntersectionObserver" in window)) {
-      show();
+      items.forEach(function(item) {
+        revealItem(item);
+      });
       return;
     }
 
     var observer = new IntersectionObserver(function(entries, obs) {
       entries.forEach(function(entry) {
         if (entry.isIntersecting) {
-          show();
+          revealItem(entry.target);
           obs.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.18,
-      rootMargin: "0px 0px -8% 0px"
+      threshold: 0.2,
+      rootMargin: "0px 0px -12% 0px"
     });
 
-    observer.observe(section);
+    items.forEach(function(item) {
+      observer.observe(item);
+    });
   }
 
   if (document.readyState === "loading") {

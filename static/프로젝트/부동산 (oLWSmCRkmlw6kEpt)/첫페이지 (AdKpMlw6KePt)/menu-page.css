@@ -127,6 +127,15 @@
   letter-spacing: -0.03em;
   font-weight: 800;
   color: #e80e6a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menupage-content-title-logo {
+  display: block;
+  width: min(58rem, 100%);
+  height: auto;
 }
 
 .menupage-content-lead {
@@ -173,6 +182,27 @@
 .menupage-canvas,
 .menupage-variant-tabs {
   will-change: transform, opacity;
+}
+
+.menupage-pre-left {
+  opacity: 0;
+  transform: translate3d(-5.2rem, 0, 0);
+}
+
+.menupage-pre-right {
+  opacity: 0;
+  transform: translate3d(5.2rem, 0, 0);
+}
+
+.menupage-pre-up {
+  opacity: 0;
+  transform: translate3d(0, 5.2rem, 0);
+}
+
+.menupage-reveal-visible {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+  animation: none !important;
 }
 
 @keyframes menupageFadeInLeft {
@@ -284,6 +314,7 @@
   border: 0;
   background: transparent;
   box-shadow: 0 1rem 2.6rem rgba(22, 38, 64, 0.12);
+  min-height: 0;
 }
 
 .menupage-canvas.has-route-map {
@@ -386,6 +417,19 @@
   display: block;
 }
 
+.menupage-image-stack {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.menupage-image-stack img {
+  width: 100%;
+  display: block;
+  height: auto;
+}
+
 .menupage-canvas-placeholder {
   min-height: 34rem;
   display: flex;
@@ -479,6 +523,13 @@
 }
 
 @media (min-width: 993px) {
+  .menu-page-view .properties-N1 .header-title .brand-mark,
+  .menu-page-view .properties-N1:hover .header-title .brand-mark,
+  .menu-page-view .properties-N1.header-top-active .header-title .brand-mark,
+  .menu-page-view .properties-N1.header-top-active:hover .header-title .brand-mark {
+    background-image: url("../resources/images/logo_off.png") !important;
+  }
+
   .menu-page-view .properties-N1,
   .menu-page-view .properties-N1.header-top-active,
   .menu-page-view .properties-N1.header-top-active:hover {
@@ -532,6 +583,26 @@
     color: #e80e6a !important;
   }
 
+  .menu-page-view .properties-N1 .header-gnblink[href*="group=route"] span {
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.92) !important;
+    border-radius: 0.2rem;
+    background: transparent !important;
+    padding: 0.2rem 1.2rem 0.1rem;
+  }
+
+  .menu-page-view .properties-N1 .header-gnbitem.menu-current .header-gnblink[href*="group=route"] span {
+    color: #fff !important;
+    border-color: rgba(255, 255, 255, 0.92) !important;
+    background: transparent !important;
+  }
+
+  .menu-page-view .properties-N1 .header-gnbitem.menu-current .header-gnblink[href*="group=route"] span::after,
+  .menu-page-view .properties-N1 .header-gnbitem.menu-current:hover .header-gnblink[href*="group=route"] span::after {
+    content: none !important;
+    display: none !important;
+  }
+
   .menu-page-view .properties-N1 .fullmenu-gnbitem.menu-current > .fullmenu-gnblink span {
     color: #e80e6a !important;
   }
@@ -548,6 +619,13 @@
 }
 
 @media (max-width: 992px) {
+  .menu-page-view .properties-N1 .header-title .brand-mark,
+  .menu-page-view .properties-N1:hover .header-title .brand-mark,
+  .menu-page-view .properties-N1.header-top-active .header-title .brand-mark,
+  .menu-page-view .properties-N1.header-top-active:hover .header-title .brand-mark {
+    background-image: url("../resources/images/logo_on.png") !important;
+  }
+
   body.menu-page-view {
     width: 100%;
     max-width: 100%;
@@ -698,6 +776,10 @@
     font-size: 3.1rem;
   }
 
+  .menupage-content-title-logo {
+    width: min(42rem, 100%);
+  }
+
   .menupage-content-lead {
     padding: 1.6rem 1.8rem;
   }
@@ -753,14 +835,14 @@
   }
 
   .menupage-variant-tabs {
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    gap: 1rem;
+    overflow-x: visible;
+    scrollbar-width: auto;
+    gap: 0.6rem;
     margin-top: 2rem;
     margin-bottom: 1.6rem;
-    padding: 0 0.2rem;
+    padding: 0;
   }
 
   .menupage-variant-tabs::-webkit-scrollbar {
@@ -768,10 +850,11 @@
   }
 
   .menupage-variant-tab {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
     min-height: 3.3rem;
-    padding: 0 1.6rem;
-    font-size: 1.72rem;
+    padding: 0 0.95rem;
+    font-size: 1.45rem;
+    letter-spacing: -0.03em;
     white-space: nowrap;
   }
 

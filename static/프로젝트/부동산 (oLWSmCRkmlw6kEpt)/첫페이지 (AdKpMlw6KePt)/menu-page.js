@@ -1,7 +1,7 @@
 ﻿(function () {
   const SITE_NAME = "양주 백석 모아엘가 그랑데";
   const FIXED_CONTENT_TITLE = "양주 백석 모아엘가 그랑데";
-
+  const CONTENT_TITLE_LOGO_SRC = "../resources/images/logo_on.png";
   function initBasicContentGuard() {
     if (window.__basicContentGuardInitialized) return;
     window.__basicContentGuardInitialized = true;
@@ -63,11 +63,9 @@
       label: "단지안내",
       topIndex: 1,
       tabs: [
-        { key: "design", label: "단지설계" },
         { key: "community", label: "커뮤니티" },
         { key: "siteplan", label: "단지배치도" },
         { key: "unitplan", label: "동 · 호수배치도" },
-        { key: "system", label: "시스템" },
       ],
     },
     type: {
@@ -79,22 +77,22 @@
       ],
     },
     route: {
-      label: "오시는길",
+      label: "공공지원 민간임대",
       topIndex: 3,
-      tabs: [{ key: "directions", label: "오시는길" }],
+      tabs: [{ key: "directions", label: "공공지원 민간임대" }],
     },
   };
 
   const TYPE_VARIANTS = {
     type: [
-      { key: "84a", label: "84m²A", image: "../resources/images/Type guide1.jpg" },
-      { key: "84b", label: "84m²B", image: "../resources/images/Type guide1_1.jpg" },
-      { key: "84c", label: "84m²C", image: "../resources/images/Type guide1_2.jpg" },
+      { key: "59ac", label: "59m²A/C", image: "../resources/images/c1.png" },
+      { key: "59bd", label: "59m²B/D", image: "../resources/images/c2.png" },
+      { key: "84ac", label: "84m²A/C", image: "../resources/images/c3.png" },
+      { key: "84bd", label: "84m²B/D", image: "../resources/images/c4.png" },
     ],
     interior: [
-      { key: "84a", label: "84m²A", image: "../resources/images/Type guide2_stack.jpg" },
-      { key: "84b", label: "84m²B", image: "../resources/images/Type guide3_stack.jpg" },
-      { key: "84c", label: "84m²C", image: "../resources/images/Type guide4_stack.jpg" },
+      { key: "59a", label: "59m²A", image: "../resources/images/d1.jpg" },
+      { key: "84a", label: "84m²A", image: "../resources/images/d2.jpg" },
     ],
   };
 
@@ -112,33 +110,26 @@
     business: {
       overview: {
         title: "양주 백석 모아엘가 그랑데 사업개요",
-        subtitle: "양주의 NEW CITY",
-        copy: "백석지구 첫 프리미엄! 자부심을 선점하라!",
+        subtitle: "양주역세권 '확신의 클래스'",
+        copy: "양주역세권의 중심! 자부심을 선점하라!",
         copySub: "",
-        image: "../resources/images/Business guide1.jpg",
+        image: "../resources/images/a1.png",
         specs: [
-          ["사업명", "양주 백석 모아엘가 그랑데"],
-          ["대지위치", "경기도 양주시 백석읍 복지리 279-1 일원(양주 복지지구 80BL)"],
-          ["대지면적", "44,836.0000평 (13,562.89m²)"],
-          ["연면적", "163,249.7075평 (49,383.04m²)"],
-          ["건폐율 / 용적률", "18.05% / 241.03%"],
-          ["사업규모", "지하 2층 ~ 지상 28층, 9개동"],
-          ["주차대수", "아파트 1,388대(주차대수 1.49:1) / 근린 생활시설 8대"],
+          ["사업명", "양주역세권지구 공동2 공동주택 신축공사"],
+          ["공급위치", "경기도 양주시 남방동 581번지"],
+          ["공급규모", "아파트 지하 최저 2층, 지상 최고 28층 4개동 총 526세대"],
         ],
         notes: [
-          "상기 CG는 소비자의 이해를 돕기 위한 것으로 실제와 차이가 날 수 있습니다.",
-          "건축물의 외관 및 색채계획, 부대시설, 창호계획, 조경계획 등의 기타 시설은 추후 변경될 수 있습니다.",
-          "단지를 제외한 기타 배경(산, 외부식재 등)은 소비자의 이해를 돕기 위한 참고 이미지를 활용하였으며 실제와 다를 수 있습니다.",
-          "단지 내외부 옹벽, 조경석, 방음벽, 태양광설비 등의 계획(범위, 디자인, 위치, 높이)은 변경될 수 있습니다.",
-          "현장여건 등에 따라 일부 변경될 수 있으므로 견본주택에 방문하시어 직접 확인하시기 바랍니다."
+          "상기 투시도는 소비자의 이해를 돕기 위해 제작된 CG컷으로 측면 그래픽, 분양 및 외부색채, 단지조경, 세부식재, 외관 디테일 등은 실제 시공 시 변경될 수 있습니다.",
+          "상기 CG이미지의 조경 및 옹벽 계획 등은 고객의 이해를 돕기 위해 제작된 것으로 실제 시공 시 변경될 수 있습니다."
         ],
       },
       location: {
         title: "양주 백석 모아엘가 그랑데 입지환경",
         subtitle: "기다려온 양주의 새로운 중심,",
-        copy: "기대되는 양주 백석 프리미엄",
+        copy: "기다려온 양주역세권 프리미엄",
         copySub: "",
-        image: "../resources/images/Business guide2.jpg",
+        image: "../resources/images/a2_v1.png",
         specs: [],
         notes: [],
       },
@@ -147,16 +138,17 @@
         subtitle: "'사는 이의 자부심과 품격이 남다른'",
         copy: "명품 라이프 브랜드",
         copySub: "",
-        image: "../resources/images/Business guide3.jpg",
+        image: "",
+        images: ["../resources/images/a3.png", "../resources/images/a3_v1.png"],
         specs: [],
         notes: [],
       },
       premium: {
         title: "양주 백석 모아엘가 그랑데 프리미엄",
         subtitle: "기다려온 양주의 새로운 중심.",
-        copy: "기대되는 양주 백석 프리미엄!",
+        copy: "기다려온 양주역세권 프리미엄",
         copySub: "",
-        image: "../resources/images/Business guide4.jpg",
+        image: "../resources/images/a4.png",
         specs: [],
         notes: [],
       },
@@ -181,19 +173,20 @@
         subtitle: "커뮤니티",
         copy: "온 가족이 함께 즐기는 고품격 커뮤니티 라이프",
         copySub: "",
-        image: "../resources/images/complex guide2_stack.jpg",
+        image: "../resources/images/b1.jpg",
       },
       siteplan: {
         subtitle: "단지배치도",
         copy: "즐거움과 휴식을 선사하는 쾌적한 힐링 단지",
         copySub: "",
-        image: "../resources/images/complex guide3.jpg",
+        image: "",
+        images: ["../resources/images/b2.jpg", "../resources/images/b2_1.jpg"],
       },
       unitplan: {
         subtitle: "동호수배치도",
         copy: "즐거움과 휴식을 선사하는 쾌적한 힐링 단지",
         copySub: "",
-        image: "../resources/images/complex guide4_stack.jpg",
+        image: "../resources/images/b3.jpg",
       },
       system: {
         subtitle: "시스템",
@@ -214,8 +207,8 @@
     type: {
       type: {
         title: "양주 백석 모아엘가 그랑데",
-        subtitle: "최고 28층의 높이와 선호도 높은",
-        copy: "84㎡ 타입으로 100% 구성된 설계",
+        subtitle: "중소형 특화 총 526세대 브랜드 단지",
+        copy: "선호도 높은 평형(59㎡/84㎡)",
         copySub: "",
         image: "",
         specs: [],
@@ -223,8 +216,8 @@
       },
       interior: {
         title: "양주 백석 모아엘가 그랑데",
-        subtitle: "최고 28층의 높이와 선호도 높은",
-        copy: "84㎡ 타입으로 100% 구성된 설계",
+        subtitle: "중소형 특화 총 526세대 브랜드 단지",
+        copy: "선호도 높은 평형(59㎡/84㎡)",
         copySub: "",
         image: "",
         specs: [],
@@ -243,10 +236,10 @@
     route: {
       default: {
         title: "양주 백석 모아엘가 그랑데",
-        subtitle: "양주의 NEW CITY",
-        copy: "백석지구 첫 프리미엄! 자부심을 선점하라!",
+        subtitle: "주거의 새로운 패러다임",
+        copy: "합리적인 임대료로 10년까지 보장!",
         copySub: "",
-        image: "",
+        image: "../resources/images/m1.png",
         specs: [],
         notes: [],
       },
@@ -384,8 +377,62 @@
     subtitleEl.textContent = SITE_NAME;
   }
 
-  function setCanvasImage(canvasEl, imageEl, placeholderEl, imageSrc, imageAlt) {
+  function setCanvasImage(canvasEl, imageEl, placeholderEl, imageSrc, imageAlt, imageSrcList) {
+    const oldStack = canvasEl.querySelector(".menupage-image-stack");
+    if (oldStack) oldStack.remove();
+
+    const stackSources = Array.isArray(imageSrcList)
+      ? imageSrcList.filter((src) => typeof src === "string" && src.trim())
+      : [];
+
+    if (stackSources.length > 0) {
+      imageEl.removeAttribute("src");
+      imageEl.hidden = true;
+      placeholderEl.hidden = true;
+      canvasEl.classList.add("has-image");
+
+      const stack = document.createElement("div");
+      stack.className = "menupage-image-stack";
+      stackSources.forEach((src) => {
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = imageAlt;
+        img.decoding = "async";
+        img.loading = "eager";
+        img.addEventListener("error", function onError() {
+          if (img.dataset.fallbackTried === "1") {
+            img.removeEventListener("error", onError);
+            img.remove();
+            return;
+          }
+          if (/\.png$/i.test(src)) {
+            img.dataset.fallbackTried = "1";
+            img.src = src.replace(/\.png$/i, ".jpg");
+            return;
+          }
+          img.removeEventListener("error", onError);
+          img.remove();
+        });
+        stack.appendChild(img);
+      });
+      canvasEl.appendChild(stack);
+      return;
+    }
+
     if (imageSrc) {
+      imageEl.onerror = function onSingleError() {
+        if (imageEl.dataset.fallbackTried === "1") {
+          imageEl.onerror = null;
+          return;
+        }
+        if (/\.png$/i.test(imageSrc)) {
+          imageEl.dataset.fallbackTried = "1";
+          imageEl.src = imageSrc.replace(/\.png$/i, ".jpg");
+          return;
+        }
+        imageEl.onerror = null;
+      };
+      imageEl.dataset.fallbackTried = "0";
       imageEl.src = imageSrc;
       imageEl.alt = imageAlt;
       imageEl.hidden = false;
@@ -482,7 +529,7 @@
     const mapNode = document.createElement("div");
     mapNode.id = `daumRoughmapContainer${ROUTE_ROUGHMAP.timestamp}`;
     mapNode.className = "root_daum_roughmap root_daum_roughmap_landing menupage-route-map-node";
-    mapNode.setAttribute("aria-label", imageAlt || "오시는길 지도");
+    mapNode.setAttribute("aria-label", imageAlt || "공공지원 민간임대 안내 지도");
     mapWrap.appendChild(mapNode);
 
     const mapInfo = document.createElement("div");
@@ -650,10 +697,16 @@
       group === "type" && selectedVariant && selectedVariant.image
         ? selectedVariant.image
         : content.image || "";
-    const isRouteDirections = group === "route" && tab === "directions";
     canvasEl.classList.toggle("has-variant-tabs", group === "type" && !!selectedVariant);
 
-    titleEl.textContent = title;
+    titleEl.textContent = "";
+    const logoImg = document.createElement("img");
+    logoImg.className = "menupage-content-title-logo";
+    logoImg.src = CONTENT_TITLE_LOGO_SRC;
+    logoImg.alt = title;
+    logoImg.decoding = "async";
+    logoImg.loading = "eager";
+    titleEl.appendChild(logoImg);
     subtitleEl.textContent = subtitle;
     copyEl.textContent = copy;
     if (copySubEl) {
@@ -666,12 +719,15 @@
       }
     }
 
-    if (isRouteDirections) {
-      renderRouteRoughMap(canvasEl, imageEl, placeholderEl, title);
-    } else {
-      teardownRouteMap(canvasEl);
-      setCanvasImage(canvasEl, imageEl, placeholderEl, resolvedImage, title);
-    }
+    teardownRouteMap(canvasEl);
+    setCanvasImage(
+      canvasEl,
+      imageEl,
+      placeholderEl,
+      resolvedImage,
+      title,
+      content.images || []
+    );
 
     renderSpecs(specs);
     renderNotes(notes);
@@ -692,16 +748,32 @@
     }
 
     const revealClasses = ["menupage-reveal-left", "menupage-reveal-right", "menupage-reveal-up"];
-    [leftEl, rightEl, ...upTargets].forEach((el) => el.classList.remove(...revealClasses));
+    const prepClasses = ["menupage-pre-left", "menupage-pre-right", "menupage-pre-up"];
+    const instantClass = "menupage-reveal-visible";
+
+    leftEl.classList.remove(...revealClasses, ...prepClasses, instantClass);
+    rightEl.classList.remove(...revealClasses, ...prepClasses, instantClass);
+    upTargets.forEach((el) => el.classList.remove(...revealClasses, ...prepClasses, instantClass));
+
+    leftEl.classList.add("menupage-pre-left");
+    rightEl.classList.add("menupage-pre-right");
+    upTargets.forEach((el) => el.classList.add("menupage-pre-up"));
 
     if (
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
+      leftEl.classList.remove("menupage-pre-left");
+      rightEl.classList.remove("menupage-pre-right");
+      upTargets.forEach((el) => el.classList.remove("menupage-pre-up"));
+      [leftEl, rightEl, ...upTargets].forEach((el) => el.classList.add(instantClass));
       return;
     }
 
     const play = () => {
+      leftEl.classList.remove("menupage-pre-left");
+      rightEl.classList.remove("menupage-pre-right");
+      upTargets.forEach((el) => el.classList.remove("menupage-pre-up"));
       leftEl.classList.add("menupage-reveal-left");
       rightEl.classList.add("menupage-reveal-right");
       upTargets.forEach((el) => el.classList.add("menupage-reveal-up"));
@@ -840,3 +912,4 @@
     initMenuPage();
   }
 })();
+
