@@ -2,6 +2,20 @@
 html, body { margin: 0 !important; padding: 0 !important; }
 .properties-N1 { top: -4px !important; }
 .properties-N4 { margin-top: -4px !important; }
+
+html.content-guard-on img,
+html.content-guard-on video {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+html.content-guard-on *:not(input):not(textarea):not([contenteditable="true"]) {
+  -webkit-user-select: none;
+  user-select: none;
+}
 .properties-N4 {
   overflow: hidden;
   margin-top: -2px;

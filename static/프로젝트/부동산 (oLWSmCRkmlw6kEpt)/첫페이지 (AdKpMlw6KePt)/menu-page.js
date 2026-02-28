@@ -5,13 +5,44 @@
   function initBasicContentGuard() {
     if (window.__basicContentGuardInitialized) return;
     window.__basicContentGuardInitialized = true;
+    document.documentElement.classList.add("content-guard-on");
 
     const editableSelector = "input, textarea, [contenteditable='true']";
+    const isEditable = function(target) {
+      return !!(target && target.closest && target.closest(editableSelector));
+    };
 
     document.addEventListener(
       "contextmenu",
       function (event) {
-        if (event.target && event.target.closest(editableSelector)) return;
+        if (isEditable(event.target)) return;
+        event.preventDefault();
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "selectstart",
+      function (event) {
+        if (isEditable(event.target)) return;
+        event.preventDefault();
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "copy",
+      function (event) {
+        if (isEditable(event.target)) return;
+        event.preventDefault();
+      },
+      { capture: true }
+    );
+
+    document.addEventListener(
+      "cut",
+      function (event) {
+        if (isEditable(event.target)) return;
         event.preventDefault();
       },
       { capture: true }
@@ -35,7 +66,12 @@
         const key = String(event.key || "").toLowerCase();
         const ctrlOrMeta = event.ctrlKey || event.metaKey;
 
-        if (ctrlOrMeta && event.shiftKey && (key === "i" || key === "j" || key === "c")) {
+        if (key === "f12" || event.keyCode === 123) {
+          event.preventDefault();
+          return;
+        }
+
+        if (ctrlOrMeta && event.shiftKey && (key === "i" || key === "j" || key === "c" || key === "k")) {
           event.preventDefault();
           return;
         }

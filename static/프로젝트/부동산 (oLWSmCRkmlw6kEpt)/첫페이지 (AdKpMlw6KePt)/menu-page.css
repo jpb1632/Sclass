@@ -1,3 +1,17 @@
+html.content-guard-on img,
+html.content-guard-on video {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+html.content-guard-on *:not(input):not(textarea):not([contenteditable="true"]) {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
 .menupage-main {
   background: #edf1f6;
   min-height: 0;

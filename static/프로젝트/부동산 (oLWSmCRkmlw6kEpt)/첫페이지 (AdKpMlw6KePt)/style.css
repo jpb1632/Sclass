@@ -783,6 +783,18 @@ html, body { margin: 0 !important; padding: 0 !important
   --width-mlw95uhc: 380px;
   --height-mlw95uhc: 530px
 }
+html.content-guard-on img,
+html.content-guard-on video {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  user-drag: none
+}
+html.content-guard-on *:not(input):not(textarea):not([contenteditable="true"]) {
+  -webkit-user-select: none;
+  user-select: none
+}
 .properties-N4 .contents-container {
   display: flex;
   align-items: center
@@ -1327,6 +1339,9 @@ to {
   width: 100%;
   height: auto
 }
+.properties-N5 .n5-card-thumb img.n5-zoomable {
+  cursor: zoom-in
+}
 .properties-N5 .n5-card-body {
   padding: 1.6rem 2rem 2.2rem;
   display: flex;
@@ -1387,6 +1402,56 @@ to {
 .properties-N5 .swiper-pagination-bullet-active {
   background: #c00d6f
 }
+.properties-N5 .n5-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.78);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.28s ease, visibility 0.28s ease
+}
+.properties-N5 .n5-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto
+}
+.properties-N5 .n5-lightbox-inner {
+  position: relative;
+  max-width: min(96vw, 92rem);
+  max-height: 90vh
+}
+.properties-N5 .n5-lightbox-image {
+  display: block;
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 1.2rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35)
+}
+.properties-N5 .n5-lightbox-close {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 3.8rem;
+  height: 3.8rem;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font-size: 2.8rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center
+}
 .properties-N5.reveal-ready .n5-card {
   opacity: 0;
   transform: translateY(42px);
@@ -1427,6 +1492,16 @@ to {
   }
   .properties-N5 .n5-pagination {
     margin-top: 1.6rem
+  }
+  .properties-N5 .n5-lightbox {
+    padding: 1.4rem
+  }
+  .properties-N5 .n5-lightbox-close {
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 2.4rem
   }
 }
 @media (prefers-reduced-motion: reduce) {
