@@ -50,6 +50,11 @@
 }
 
 @media (min-width: 993px) {
+  .properties-N6 .n6-image-item-first img {
+    width: 80%;
+    margin: 0 auto;
+  }
+
   .properties-N6 .n6-image-item-second img {
     width: 70%;
   }
@@ -70,6 +75,10 @@
   }
 
   .properties-N6 .n6-image-item-second img {
+    width: 100%;
+  }
+
+  .properties-N6 .n6-image-item-first img {
     width: 100%;
   }
 }
