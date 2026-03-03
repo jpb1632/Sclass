@@ -160,7 +160,7 @@
       targets.forEach(function(card, idx) {
         window.setTimeout(function() {
           card.classList.add("in-view");
-        }, idx * 120);
+        }, (idx + 1) * 120);
       });
     };
 

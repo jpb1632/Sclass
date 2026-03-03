@@ -23,11 +23,12 @@
 .properties-N5 .n5-mobile-top-item {
   border-radius: 0.8rem;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(42px);
+  visibility: hidden;
 }
 
 .properties-N5.reveal-ready .n5-mobile-top-item {
-  opacity: 0;
-  transform: translateY(42px);
   transition: opacity 1.25s ease, transform 1.25s ease;
   will-change: opacity, transform;
 }
@@ -35,6 +36,7 @@
 .properties-N5.reveal-ready .n5-mobile-top-item.in-view {
   opacity: 1;
   transform: translateY(0);
+  visibility: visible;
 }
 
 .properties-N5 .title-area {
@@ -307,6 +309,7 @@
     opacity: 1;
     transform: none;
     transition: none;
+    visibility: visible;
   }
 
   .properties-N5.reveal-ready .n5-card {
