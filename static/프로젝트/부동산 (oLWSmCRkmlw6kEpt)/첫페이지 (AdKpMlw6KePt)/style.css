@@ -2119,6 +2119,12 @@ to {
     gap: 0.6rem;
     margin-bottom: 3rem
   }
+  .properties-N9 .title-area .h6 {
+    font-size: clamp(2.6rem, 8.2vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.01em
+  }
   .properties-N9 .ico-dot {
     width: 1.2rem;
     height: 1.2rem
@@ -2674,6 +2680,23 @@ body {
 .fixed-consult-bar.is-split .consult-call-number {
     font-size: calc(26px * var(--consult-scale));
     letter-spacing: -0.02em
+  }
+.fixed-consult-bar.is-split .consult-call-label {
+    font-size: 0;
+    line-height: 1
+  }
+.fixed-consult-bar.is-split .consult-call-label::before {
+    content: "클릭 시 전화 연결";
+    display: inline-block;
+    font-size: calc(19px * var(--consult-scale));
+    font-weight: 800;
+    line-height: 1.05;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    white-space: nowrap
+  }
+.fixed-consult-bar.is-split .consult-call-sep {
+    display: none
   }
 .fixed-consult-bar.is-split .consult-form-wrap {
     padding: calc(12px * var(--consult-scale)) calc(8px * var(--consult-scale)) 0 calc(28px * var(--consult-scale));

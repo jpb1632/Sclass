@@ -291,6 +291,13 @@
     margin-bottom: 3rem;
   }
 
+  .properties-N9 .title-area .h6 {
+    font-size: clamp(2.6rem, 8.2vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+
   .properties-N9 .ico-dot {
     width: 1.2rem;
     height: 1.2rem;
