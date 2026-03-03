@@ -31,6 +31,10 @@
   height: auto;
 }
 
+.properties-N6 .n6-mobile-only {
+  display: none;
+}
+
 /* Scroll reveal for N6 images */
 .properties-N6.reveal-ready .n6-image-item {
   opacity: 0;
@@ -80,6 +84,18 @@
 
   .properties-N6 .n6-image-item-first img {
     width: 100%;
+  }
+
+  .properties-N6 .n6-hide-mobile {
+    display: none;
+  }
+
+  .properties-N6 .n6-mobile-only {
+    display: block;
+  }
+
+  .properties-N6 .n6-mobile-only + .n6-mobile-only {
+    margin-top: 0 !important;
   }
 }
 

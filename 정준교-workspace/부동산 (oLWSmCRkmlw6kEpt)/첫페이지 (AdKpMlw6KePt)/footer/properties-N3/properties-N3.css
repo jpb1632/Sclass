@@ -291,12 +291,21 @@
 
 @media (max-width: 900px) {
   :root {
-    --consult-base-height: 76;
-    --consult-scale: clamp(0.74, calc((100vw / (var(--consult-base-width) * 1px)) * 1.12), 3);
+    --consult-base-height: 82;
+    --consult-scale: clamp(0.82, calc((100vw / (var(--consult-base-width) * 1px)) * 1.2), 3);
+  }
+
+  .fixed-consult-bar.is-split .fixed-consult-inner {
+    grid-template-columns: 43.5% 56.5%;
   }
 
   .fixed-consult-bar.is-split .consult-call {
-    padding: 0 calc(8px * var(--consult-scale)) 0 calc(14px * var(--consult-scale));
+    padding: 0 calc(7px * var(--consult-scale)) 0 calc(11px * var(--consult-scale));
+  }
+
+  .fixed-consult-bar.is-split .consult-call-number {
+    font-size: calc(26px * var(--consult-scale));
+    letter-spacing: -0.02em;
   }
 
   .fixed-consult-bar.is-split .consult-form-wrap {

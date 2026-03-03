@@ -121,6 +121,7 @@
     $(".properties-N4[id='pGmlW6KDwI']").each(function() {
       const $block = $(this);
       const $overlay = $block.find(".popup-overlay");
+      const $stage = $block.find(".popup-stage");
       const $popupArea = $block.find(".popup-area");
       const $popupTrack = $block.find(".popup-track");
       const $cards = $popupTrack.find(".popup-card");
@@ -135,6 +136,7 @@
       let touchStartY = 0;
       let autoplayTimer = null;
       let onVisibilityChange = null;
+      let fitRaf = null;
 
       $block.find(".popup-card img").attr("draggable", "false");
 
@@ -182,6 +184,34 @@
         startAutoplay();
       }
 
+      function fitDesktopPopup() {
+        if (!$stage.length) return;
+        const stageEl = $stage.get(0);
+        if (!stageEl) return;
+
+        if (isMobilePopup()) {
+          stageEl.style.removeProperty("--popup-desktop-scale");
+          return;
+        }
+
+        stageEl.style.setProperty("--popup-desktop-scale", "0.9");
+        const viewportHeight = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+        const availableHeight = Math.max(240, viewportHeight - 32);
+        const measuredHeight = stageEl.getBoundingClientRect().height;
+        if (!measuredHeight || measuredHeight <= availableHeight) return;
+
+        const fitScale = Math.max(0.55, Math.min(0.9, 0.9 * (availableHeight / measuredHeight)));
+        stageEl.style.setProperty("--popup-desktop-scale", fitScale.toFixed(3));
+      }
+
+      function scheduleFitDesktopPopup() {
+        if (fitRaf) window.cancelAnimationFrame(fitRaf);
+        fitRaf = window.requestAnimationFrame(function() {
+          fitDesktopPopup();
+          fitRaf = null;
+        });
+      }
+
       function buildDots() {
         if (!$cards.length) return;
         $dots.empty();
@@ -197,6 +227,7 @@
       }
 
       buildDots();
+      $popupTrack.find("img").on("load", scheduleFitDesktopPopup);
 
       $prev.on("click", function() {
         if (!isMobilePopup()) return;
@@ -242,6 +273,7 @@
 
       $(window).on("resize orientationchange", function() {
         renderPopupSlider();
+        scheduleFitDesktopPopup();
         startAutoplay();
       });
 
@@ -252,6 +284,7 @@
       }
 
       goTo(0);
+      scheduleFitDesktopPopup();
       startAutoplay();
 
       onVisibilityChange = function() {
