@@ -621,13 +621,15 @@
 
   function initN5Reveal(sectionEl) {
     if (!sectionEl) return;
+    var topItems = sectionEl.querySelectorAll(".n5-mobile-top-item");
     var cards = sectionEl.querySelectorAll(".swiper-slide .n5-card");
-    if (!cards.length) return;
+    if (!cards.length && !topItems.length) return;
 
     sectionEl.classList.add("reveal-ready");
 
     var show = function() {
-      cards.forEach(function(card, idx) {
+      var targets = Array.prototype.slice.call(topItems).concat(Array.prototype.slice.call(cards));
+      targets.forEach(function(card, idx) {
         window.setTimeout(function() {
           card.classList.add("in-view");
         }, idx * 120);

@@ -35,6 +35,10 @@
   display: none;
 }
 
+.properties-N6 .n6-mobile-type-label {
+  display: none;
+}
+
 /* Scroll reveal for N6 images */
 .properties-N6.reveal-ready .n6-image-item {
   opacity: 0;
@@ -96,6 +100,33 @@
 
   .properties-N6 .n6-mobile-only + .n6-mobile-only {
     margin-top: 0 !important;
+  }
+
+  .properties-N6 .n6-mobile-type-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.2rem 0 0.8rem;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #2d3c56;
+    letter-spacing: -0.01em;
+  }
+
+  .properties-N6 .n6-mobile-type-label::before {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    background: #c00d6f;
+    border-radius: 1px;
+    flex: 0 0 auto;
+  }
+
+  .properties-N6 .n6-mobile-type-label sup {
+    font-size: 0.62em;
+    line-height: 0;
+    vertical-align: super;
   }
 }
 

@@ -10,6 +10,33 @@
   width: 100%;
 }
 
+.properties-N5 .n5-mobile-top-stack {
+  display: none;
+}
+
+.properties-N5 .n5-mobile-top-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.properties-N5 .n5-mobile-top-item {
+  border-radius: 0.8rem;
+  overflow: hidden;
+}
+
+.properties-N5.reveal-ready .n5-mobile-top-item {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 1.25s ease, transform 1.25s ease;
+  will-change: opacity, transform;
+}
+
+.properties-N5.reveal-ready .n5-mobile-top-item.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .properties-N5 .title-area {
   display: flex;
   align-items: center;
@@ -212,8 +239,17 @@
 
 @media (max-width: 992px) {
   .properties-N5 {
-    padding-top: 4rem;
+    padding-top: 2rem;
     padding-bottom: 4rem;
+  }
+
+  .properties-N5 .n5-mobile-top-stack {
+    display: block;
+    margin: 0 0 2rem;
+  }
+
+  .properties-N5 .n5-mobile-top-item + .n5-mobile-top-item {
+    margin-top: 2rem;
   }
 
   .properties-N5 .title-area {
@@ -267,6 +303,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .properties-N5.reveal-ready .n5-mobile-top-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
   .properties-N5.reveal-ready .n5-card {
     opacity: 1;
     transform: none;

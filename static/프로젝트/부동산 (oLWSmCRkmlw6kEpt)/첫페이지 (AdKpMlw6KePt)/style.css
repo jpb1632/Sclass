@@ -1297,6 +1297,28 @@ to {
 .properties-N5 .contents-inner {
   width: 100%
 }
+.properties-N5 .n5-mobile-top-stack {
+  display: none
+}
+.properties-N5 .n5-mobile-top-item img {
+  display: block;
+  width: 100%;
+  height: auto
+}
+.properties-N5 .n5-mobile-top-item {
+  border-radius: 0.8rem;
+  overflow: hidden
+}
+.properties-N5.reveal-ready .n5-mobile-top-item {
+  opacity: 0;
+  transform: translateY(42px);
+  transition: opacity 1.25s ease, transform 1.25s ease;
+  will-change: opacity, transform
+}
+.properties-N5.reveal-ready .n5-mobile-top-item.in-view {
+  opacity: 1;
+  transform: translateY(0)
+}
 .properties-N5 .title-area {
   display: flex;
   align-items: center;
@@ -1471,8 +1493,15 @@ to {
 }
 @media (max-width: 992px) {
   .properties-N5 {
-    padding-top: 4rem;
+    padding-top: 2rem;
     padding-bottom: 4rem
+  }
+  .properties-N5 .n5-mobile-top-stack {
+    display: block;
+    margin: 0 0 2rem
+  }
+  .properties-N5 .n5-mobile-top-item + .n5-mobile-top-item {
+    margin-top: 2rem
   }
   .properties-N5 .title-area {
     flex-direction: column;
@@ -1515,6 +1544,11 @@ to {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .properties-N5.reveal-ready .n5-mobile-top-item {
+    opacity: 1;
+    transform: none;
+    transition: none
+  }
   .properties-N5.reveal-ready .n5-card {
     opacity: 1;
     transform: none;
@@ -1551,6 +1585,9 @@ to {
   height: auto
 }
 .properties-N6 .n6-mobile-only {
+  display: none
+}
+.properties-N6 .n6-mobile-type-label {
   display: none
 }
 .properties-N6.reveal-ready .n6-image-item {
@@ -1601,6 +1638,30 @@ to {
   }
   .properties-N6 .n6-mobile-only + .n6-mobile-only {
     margin-top: 0 !important
+  }
+  .properties-N6 .n6-mobile-type-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.2rem 0 0.8rem;
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #2d3c56;
+    letter-spacing: -0.01em
+  }
+  .properties-N6 .n6-mobile-type-label::before {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    background: #c00d6f;
+    border-radius: 1px;
+    flex: 0 0 auto
+  }
+  .properties-N6 .n6-mobile-type-label sup {
+    font-size: 0.62em;
+    line-height: 0;
+    vertical-align: super
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1932,6 +1993,9 @@ to {
   gap: 1.2rem;
   margin-bottom: 6rem;
   text-align: center
+}
+.properties-N9 .title-area .h6 {
+  color: #c00d6f
 }
 .properties-N9 .ico-dot {
   width: 1.6rem;
