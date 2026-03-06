@@ -296,11 +296,11 @@
   }
 
   .fixed-consult-bar.is-split .fixed-consult-inner {
-    grid-template-columns: 43.5% 56.5%;
+    grid-template-columns: 45% 55%;
   }
 
   .fixed-consult-bar.is-split .consult-call {
-    padding: 0 calc(7px * var(--consult-scale)) 0 calc(11px * var(--consult-scale));
+    padding: 0 calc(8px * var(--consult-scale));
   }
 
   .fixed-consult-bar.is-split .consult-call-number {

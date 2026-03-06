@@ -58,6 +58,7 @@
   gap: 1.2rem;
   margin-bottom: 6rem;
   text-align: center;
+  scroll-margin-top: 12rem;
 }
 
 .properties-N9 .title-area .h6 {
@@ -124,6 +125,39 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
+}
+
+.properties-N9 {
+  scroll-margin-top: 12rem;
+}
+
+.properties-N9 .n9-scroll-anchor {
+  position: relative;
+  top: -12rem;
+  display: block;
+  width: 100%;
+  height: 0;
+  pointer-events: none;
+}
+
+.properties-N9 .n9-bottom-banner {
+  margin-top: 3.2rem;
+}
+
+.properties-N9 .n9-bottom-banner-link {
+  display: block;
+}
+
+.properties-N9 .n9-bottom-banner-media {
+  overflow: hidden;
+  border-radius: 2rem;
+  box-shadow: 0 1.4rem 3.2rem rgba(19, 40, 74, 0.12);
+}
+
+.properties-N9 .n9-bottom-banner-media img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .properties-N9 .info-title {
@@ -283,6 +317,89 @@
   color: var(--text-color1);
 }
 
+@media (min-width: 993px) {
+  .properties-N9 .title-area .h6 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .properties-N9 .form-group {
+    max-width: 1040px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, #ffffff 100%);
+    border: 1px solid #cfd7e5;
+    border-radius: 3.2rem;
+    box-shadow: 0 2rem 5rem rgba(20, 36, 62, 0.08);
+    padding: 4rem clamp(2.4rem, 4vw, 4.8rem);
+  }
+
+  .properties-N9 .form-group form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.2rem 2.4rem;
+    align-items: start;
+  }
+
+  .properties-N9 .form-box,
+  .properties-N9 .inputset {
+    height: 100%;
+  }
+
+  .properties-N9 .form-box + .form-box {
+    margin-top: 0;
+  }
+
+  .properties-N9 .form-box:nth-child(3),
+  .properties-N9 .form-box:nth-child(5),
+  .properties-N9 .form-wrap {
+    grid-column: 1 / -1;
+  }
+
+  .properties-N9 .form-control {
+    min-height: 6rem;
+    padding: 0 2rem;
+    border: 1px solid #d8e0ed;
+    border-radius: 1.8rem;
+    background: #f8fbff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  .properties-N9 .inputset-textarea.form-control {
+    min-height: 16rem;
+    padding: 1.6rem 2rem;
+  }
+
+  .properties-N9 .form-control:focus {
+    border-color: #c00d6f;
+    background: #ffffff;
+    box-shadow: 0 0 0 0.4rem rgba(192, 13, 111, 0.08);
+  }
+
+  .properties-N9 .checkset-wrap {
+    padding: 1.8rem 2rem;
+    border: 1px solid #d8e0ed;
+    border-radius: 1.8rem;
+    background: #f8fbff;
+  }
+
+  .properties-N9 .form-wrap {
+    margin-top: 0.8rem;
+    padding-top: 1.2rem;
+  }
+
+  .properties-N9 .contents-agree {
+    gap: 1rem;
+  }
+
+  .properties-N9 .form-btn .btnset-primary {
+    min-width: 18rem;
+    height: 6rem;
+    border-radius: 1.6rem;
+    box-shadow: 0 1.2rem 2.4rem rgba(19, 40, 74, 0.14);
+  }
+}
+
 @media (max-width: 992px) {
   .properties-N9 {
     padding-top: 3rem;
@@ -293,6 +410,7 @@
     flex-direction: column;
     gap: 0.6rem;
     margin-bottom: 3rem;
+    scroll-margin-top: 9rem;
   }
 
   .properties-N9 .title-area .h6 {
@@ -345,6 +463,14 @@
 
   .properties-N9 .form-wrap {
     margin-top: 1.8rem;
+  }
+
+  .properties-N9 .n9-bottom-banner {
+    margin-top: 2rem;
+  }
+
+  .properties-N9 .n9-scroll-anchor {
+    top: -9rem;
   }
 }
 

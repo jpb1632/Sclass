@@ -149,14 +149,17 @@
 
   function initN5Reveal(sectionEl) {
     if (!sectionEl) return;
+    var leadItems = sectionEl.querySelectorAll(".n5-lead-item");
     var topItems = sectionEl.querySelectorAll(".n5-mobile-top-item");
     var cards = sectionEl.querySelectorAll(".swiper-slide .n5-card");
-    if (!cards.length && !topItems.length) return;
+    if (!cards.length && !topItems.length && !leadItems.length) return;
 
     sectionEl.classList.add("reveal-ready");
 
     var show = function() {
-      var targets = Array.prototype.slice.call(topItems).concat(Array.prototype.slice.call(cards));
+      var targets = Array.prototype.slice.call(leadItems)
+        .concat(Array.prototype.slice.call(topItems))
+        .concat(Array.prototype.slice.call(cards));
       targets.forEach(function(card, idx) {
         window.setTimeout(function() {
           card.classList.add("in-view");
