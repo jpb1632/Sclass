@@ -272,6 +272,8 @@
     initBasicContentGuard();
     ensureLeadSubmitLoaded();
 
+    const skipPopupForConsultation = window.location.hash === "#consultation";
+
     $(".properties-N4[id='pGmlW6KDwI']").each(function() {
       const $block = $(this);
       const $overlay = $block.find(".popup-overlay");
@@ -431,7 +433,7 @@
         startAutoplay();
       });
 
-      if (isPopupHidden()) {
+      if (isPopupHidden() || skipPopupForConsultation) {
         stopAutoplay();
         hidePopup($overlay);
         return;
