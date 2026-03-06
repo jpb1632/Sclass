@@ -73,12 +73,16 @@
           try {
             const frameWindow = frame.contentWindow;
             const frameDocument = frameWindow && frameWindow.document;
-            const target = frameDocument && frameDocument.querySelector(hash);
+            const isConsultationHash = hash === "#consultation";
+            const targetSelector = isConsultationHash ? ".properties-N9 .title-area" : hash;
+            const target = frameDocument && (frameDocument.querySelector(targetSelector) || frameDocument.querySelector(hash));
             if (!target) return;
 
             const rect = target.getBoundingClientRect();
             const absoluteTop = rect.top + frameWindow.scrollY;
-            const offset = frameWindow.innerWidth <= 992 ? 84 : 116;
+            const offset = isConsultationHash
+              ? (frameWindow.innerWidth <= 992 ? 112 : 152)
+              : (frameWindow.innerWidth <= 992 ? 84 : 116);
 
             frameWindow.scrollTo({
               top: Math.max(0, absoluteTop - offset),
@@ -87,9 +91,9 @@
           } catch (_) {}
         };
 
-        window.setTimeout(applyScroll, 40);
-        window.setTimeout(applyScroll, 180);
-        window.setTimeout(applyScroll, 420);
+        [40, 180, 420, 900, 1600].forEach((delay) => {
+          window.setTimeout(applyScroll, delay);
+        });
       };
 
       const syncFrameHash = () => {
